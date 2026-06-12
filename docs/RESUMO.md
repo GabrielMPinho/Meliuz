@@ -114,14 +114,14 @@ Objetivo: ao final deste checklist, a solucao deve ler os 3 datasets, calcular a
 
 ### 6.2. Calculos em Python
 
-- [ x ] **Calcular KPIs de decisao**
+- [  ] **Calcular KPIs de decisao**
   Implementar os KPIs obrigatorios usados na escolha do vencedor.
 
-  - [ x ] **Lucro liquido total**: comissao total - cashback total.
-  - [ x ] **ROI**: lucro liquido total / cashback total.
-  - [ x ] **Lucro por comprador**: lucro liquido total / compradores totais.
-  - [ x ] **GMV**: soma de vendas totais.
-  - [ x ] **Compradores totais**: soma de compradores.
+  - [  ] **Lucro liquido total**: comissao total - cashback total.
+  - [  ] **ROI**: lucro liquido total / cashback total.
+  - [  ] **Lucro por comprador**: lucro liquido total / compradores totais.
+  - [  ] **GMV**: soma de vendas totais.
+  - [  ] **Compradores totais**: soma de compradores.
 
 - [ ] **Calcular KPIs complementares**
   Implementar os 12 KPIs extras do banco de analise geral, sem repetir os KPIs principais de decisao.
