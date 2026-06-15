@@ -3,6 +3,11 @@ def kpis_analise(df):
 
     #----------------------KPIs-------------------------------------
 
+    def dividir_seguro(numerador, denominador):
+        if pd.isna(denominador) or denominador == 0:
+            return None
+        return numerador / denominador
+
     def calcular_comissao_total(df_agrupado):
         resultado = {}
         for grupo, linha in df_agrupado.iterrows():
@@ -20,21 +25,27 @@ def kpis_analise(df):
     def calcular_ticket_medio(df_agrupado):
         resultado = {}
         for grupo, linha in df_agrupado.iterrows():
-            ticket_medio = linha["vendas_totais"] / linha["compradores"]
+            ticket_medio = dividir_seguro(
+                linha["vendas_totais"], linha["compradores"]
+            )
             resultado[grupo] = ticket_medio
         return resultado
 
     def calcular_comissao_por_comprador(df_agrupado):
         resultado = {}
         for grupo, linha in df_agrupado.iterrows():
-            comissao_por_comprador = linha["comissão"] / linha["compradores"]
+            comissao_por_comprador = dividir_seguro(
+                linha["comissão"], linha["compradores"]
+            )
             resultado[grupo] = comissao_por_comprador
         return resultado
 
     def calcular_cashback_por_comprador(df_agrupado):
         resultado = {}
         for grupo, linha in df_agrupado.iterrows():
-            cashback_por_comprador = linha["cashback"] / linha["compradores"]
+            cashback_por_comprador = dividir_seguro(
+                linha["cashback"], linha["compradores"]
+            )
             resultado[grupo] = cashback_por_comprador
         return resultado
 
@@ -42,14 +53,18 @@ def kpis_analise(df):
         resultado = {}
         for grupo, linha in df_agrupado.iterrows():
             lucro_liquido = linha["comissão"] - linha["cashback"]
-            margem_liquida_gmv = lucro_liquido / linha["vendas_totais"]
+            margem_liquida_gmv = dividir_seguro(
+                lucro_liquido, linha["vendas_totais"]
+            )
             resultado[grupo] = margem_liquida_gmv
         return resultado
 
     def calcular_cashback_sobre_gmv(df_agrupado):
         resultado = {}
         for grupo, linha in df_agrupado.iterrows():
-            cashback_sobre_gmv = linha["cashback"] / linha["vendas_totais"]
+            cashback_sobre_gmv = dividir_seguro(
+                linha["cashback"], linha["vendas_totais"]
+            )
             resultado[grupo] = cashback_sobre_gmv
         return resultado
 
@@ -60,7 +75,9 @@ def kpis_analise(df):
             gmvs[grupo] = linha["vendas_totais"]
         maior_gmv = max(gmvs.values())
         for grupo, linha in df_agrupado.iterrows():
-            perda_gmv = (maior_gmv - linha["vendas_totais"]) / maior_gmv
+            perda_gmv = dividir_seguro(
+                maior_gmv - linha["vendas_totais"], maior_gmv
+            )
             resultado[grupo] = perda_gmv
         return resultado
 
@@ -71,7 +88,9 @@ def kpis_analise(df):
             compradores_por_grupo[grupo] = linha["compradores"]
         maior_compradores = max(compradores_por_grupo.values())
         for grupo, linha in df_agrupado.iterrows():
-            perda_compradores = (maior_compradores - linha["compradores"]) / maior_compradores
+            perda_compradores = dividir_seguro(
+                maior_compradores - linha["compradores"], maior_compradores
+            )
             resultado[grupo] = perda_compradores
         return resultado
 

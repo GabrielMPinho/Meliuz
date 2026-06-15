@@ -3,6 +3,11 @@ def kpis_decisao(df):
 
     #----------------------KPIs-------------------------------------
 
+    def dividir_seguro(numerador, denominador):
+        if pd.isna(denominador) or denominador == 0:
+            return None
+        return numerador / denominador
+
     def calcular_lucro_liquido(df_agrupado):
         resultado = {}
         for grupo, linha in df_agrupado.iterrows():
@@ -13,14 +18,16 @@ def kpis_decisao(df):
     def calcular_roi(df_agrupado):
         resultado = {}
         for grupo, linha in df_agrupado.iterrows():
-            roi = (linha["comissão"] - linha["cashback"]) / linha["cashback"]
+            lucro = linha["comissão"] - linha["cashback"]
+            roi = dividir_seguro(lucro, linha["cashback"])
             resultado[grupo] = roi
         return resultado
     
     def calcular_lucro_por_comprador(df_agrupado):
         resultado = {}
         for grupo, linha in df_agrupado.iterrows():
-            lucro_comprador = (linha["comissão"] - linha["cashback"]) / linha["compradores"]
+            lucro = linha["comissão"] - linha["cashback"]
+            lucro_comprador = dividir_seguro(lucro, linha["compradores"])
             resultado[grupo] = lucro_comprador
         return resultado
     

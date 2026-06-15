@@ -100,11 +100,142 @@ explicar o teste.
 | 5 | **Lucro liquido total + ROI + GMV** | O resultado combina impacto financeiro, eficiencia e escala? | Ajuda a comparar grupos que podem ter trade-offs diferentes: maior lucro, melhor eficiencia ou maior volume. |
 
 
-## 6. Checklist de Implementacao do Projeto
+## 6. Regra de Decisao
+
+A decisao final deve ser calculada em Python. A LLM nao escolhe vencedor.
+
+### 6.1. Parametros Configuraveis
+
+Os thresholds abaixo sao defaults do case. Em um produto real, deveriam ser
+calibrados com historico de testes e metas internas do negocio.
+
+```python
+LUCRO_TOLERANCE = 0.10
+ROI_ADVANTAGE = 0.20
+EMPATE_LUCRO = 0.05
+EMPATE_ROI = 0.10
+SCALE_OK_LIMIT = 0.20
+SCALE_CRITICAL_LIMIT = 0.40
+```
+
+Interpretacao:
+
+- `LUCRO_TOLERANCE`: o candidato de eficiencia pode perder ate 10% de lucro vs o candidato de lucro.
+- `ROI_ADVANTAGE`: o candidato de eficiencia precisa ter ROI pelo menos 20% maior.
+- `EMPATE_LUCRO`: gap de lucro abaixo de 5% entra como possivel empate tecnico.
+- `EMPATE_ROI`: gap de ROI abaixo de 10% entra como possivel empate tecnico.
+- `SCALE_OK_LIMIT`: perda de escala ate 20% e considerada ok.
+- `SCALE_CRITICAL_LIMIT`: perda de escala acima de 40% torna o grupo inelegivel.
+
+### 6.2. Elegibilidade
+
+Um grupo so pode vencer se cumprir os criterios financeiros minimos:
+
+- lucro liquido total > 0;
+- ROI > 0;
+- lucro por comprador > 0.
+
+### 6.3. Escala (GMV + Compradores totais)
+
+A escala deve ser avaliada contra o maior valor observado no proprio teste, não
+necessariamente contra um grupo controle.
+
+Calcular separadamente:
+
+- perda de GMV vs maior GMV observado;
+- perda de compradores vs maior compradores observado.
+
+Classificacao:
+
+- perda <= 20%: ok;
+- 20% < perda <= 40%: alerta de escala, mas o grupo continua elegivel;
+- perda > 40%: grupo inelegivel.
+
+### 6.4. Caso sem Grupo Elegivel
+
+Se nenhum grupo for elegivel, a recomendacao deve ser:
+
+> Nao escalar. Revisar politica de cashback.
+
+### 6.5. Caso com Apenas um Grupo Elegivel
+
+Se apenas um grupo for elegivel, ele vence por `unico_elegivel`, nao por
+`consenso`.
+
+Esse caso deve ser sinalizado no relatorio, porque significa que os demais grupos
+foram eliminados pelos criterios de elegibilidade.
+
+### 6.6. Escolha do Vencedor
+
+Entre os grupos elegiveis, a decisao considera dois candidatos:
+
+- **Candidato de lucro**: grupo elegivel com maior lucro liquido total.
+- **Candidato de eficiencia**: grupo elegivel com maior ROI.
+
+Regra:
+
+1. Se o candidato de lucro e o candidato de eficiencia forem o mesmo grupo, ele vence por consenso.
+2. Se forem grupos diferentes, o candidato de eficiencia vence se:
+   - lucro do candidato de eficiencia >= lucro do candidato de lucro * (1 - `LUCRO_TOLERANCE`);
+   - ROI do candidato de eficiencia >= ROI do candidato de lucro * (1 + `ROI_ADVANTAGE`).
+3. Empate tecnico:
+   - `gap_lucro` < `EMPATE_LUCRO`;
+   - `gap_roi` < `EMPATE_ROI`.
+4. Se houver empate tecnico, a solucao deve mostrar o alerta:
+   > Diferenca pequena demais entre grupo X e grupo Y para sustentar recomendacao forte com dados agregados.
+5. Mesmo com empate tecnico, a solucao ainda deve definir um vencedor por desempate.
+6. Caso contrario, vence o candidato de lucro.
+
+Na pratica:
+
+- o candidato de eficiencia pode vencer se tiver pelo menos 90% do lucro do candidato de lucro e 120% do ROI do candidato de lucro;
+- se a diferenca dos lucros for menor que 5% do maior lucro entre os candidatos e a diferenca de ROI for menor que 10% do maior ROI entre os candidatos, existe empate tecnico;
+- empate tecnico nao impede a decisao, apenas reduz a confianca da recomendacao;
+- se nenhuma dessas condicoes acontecer, vence o candidato de lucro.
+
+### 6.7. Como Calcular os Gaps
+
+Usar os candidatos de lucro e eficiencia como referencia:
+
+```text
+gap_lucro = abs(lucro_A - lucro_B) / max(lucro_A, lucro_B)
+gap_roi = abs(ROI_A - ROI_B) / max(ROI_A, ROI_B)
+```
+
+Onde:
+
+- `A` = candidato de lucro;
+- `B` = candidato de eficiencia.
+
+### 6.8. Desempate
+
+Se houver empate técnico entre Grupo X e Grupo Y:
+
+1. Mostrar o alerta:
+   > Diferenca pequena demais entre Grupo X e Grupo Y para sustentar recomendacao forte com dados agregados.
+2. Desempatar por:
+   - maior lucro por comprador;
+   - maior GMV;
+   - maior compradores totais.
+3. Se ainda empatar em tudo, vence o candidato de lucro.
+
+### 6.9. Alertas
+
+- **Empate tecnico**: gap de lucro < 5% e gap de ROI < 10%.
+- **Risco de escala**: perda de GMV ou compradores entre 20% e 40%.
+- **Troca por eficiencia**: candidato de ROI venceu mesmo sem ter o maior lucro.
+- **Risco de eficiencia**: candidato de lucro venceu, mas seu ROI ficou muito abaixo do melhor ROI do teste.
+- **Unico elegivel**: apenas um grupo passou nos criterios de elegibilidade.
+
+Para a V1, o empate tecnico usa apenas gap percentual. Uma evolucao futura pode
+combinar esse criterio com um gap absoluto minimo em R$.
+
+
+## 7. Checklist de Implementacao do Projeto
 
 Objetivo: ao final deste checklist, a solucao deve ler os 3 datasets, calcular a decisao em Python, gerar narrativa com LLM, produzir relatorio e registrar o resultado final.
 
-### 6.1. Base do Projeto
+### 7.1. Base do Projeto
 
 - [X] **Organizar estrutura minima do projeto**
   Manter `data/`, `docs/`, `src/`, `prompts/` e `outputs/`, separando dados de entrada, documentacao, codigo, prompts e arquivos gerados.
@@ -112,7 +243,7 @@ Objetivo: ao final deste checklist, a solucao deve ler os 3 datasets, calcular a
 - [x] **Fazer ETL inicial**
   Criar uma funcao que leia qualquer CSV do case, normalize nomes de colunas, trate datas, limpe campos monetarios, padronize textos e retorne um dataframe pronto para calculo.
 
-### 6.2. Calculos em Python
+### 7.2. Calculos em Python
 
 - [x] **Calcular KPIs de decisao**
   Implementar os KPIs obrigatorios usados na escolha do vencedor.
@@ -123,7 +254,7 @@ Objetivo: ao final deste checklist, a solucao deve ler os 3 datasets, calcular a
   - [x] **GMV**: soma de vendas totais.
   - [x] **Compradores totais**: soma de compradores.
 
-- [ ] **Calcular KPIs complementares**
+- [x] **Calcular KPIs complementares**
   Implementar os 11 KPIs extras do banco de analise geral, sem repetir os KPIs principais de decisao.
 
   - [x] **Comissao total**: soma de comissao.
@@ -133,41 +264,41 @@ Objetivo: ao final deste checklist, a solucao deve ler os 3 datasets, calcular a
   - [x] **Cashback por comprador**: cashback total / compradores totais.
   - [x] **Margem liquida sobre GMV**: lucro liquido total / GMV.
   - [x] **Cashback sobre GMV**: cashback total / GMV.
-  - [ ] **Gap de lucro vs 2o colocado**: diferenca percentual de lucro entre o vencedor e o segundo colocado.
+  - [x] **Gap de lucro vs 2o colocado**: diferenca percentual de lucro entre o vencedor e o segundo colocado.
   - [x] **Perda de GMV vs maior GMV**: diferenca percentual entre o grupo analisado e o grupo com maior GMV.
   - [x] **Perda de compradores vs maior compradores**: diferenca percentual entre o grupo analisado e o grupo com mais compradores.
   - [x] **Dias com lucro negativo**: quantidade ou percentual de dias em que o lucro liquido foi menor que zero.
   
 
-### 6.3. Decisao e Auditoria
+### 7.3. Decisao e Auditoria
 
-- [ ] **Criar catalogo de KPIs e combos permitidos**
+- [x] **Criar catalogo de KPIs e combos permitidos**
   Montar uma estrutura que informe para a LLM quais KPIs e combos existem, o que cada um explica e quando podem ser usados na narrativa.
 
-- [ ] **Implementar regra deterministica de decisao**
+- [x] **Implementar regra deterministica de decisao**
   Escolher o vencedor em Python, priorizando maior lucro liquido total e usando ROI, lucro por comprador, GMV e compradores como criterios de eficiencia, rentabilidade e escala.
 
-- [ ] **Definir tratamento para casos inconclusivos**
+- [x] **Definir tratamento para casos inconclusivos**
   Criar regra para quando nenhum grupo deve ser escalado, por exemplo quando todos falham em lucro, ROI, rentabilidade ou escala minima.
 
-- [ ] **Gerar JSON auditavel da analise**
+- [x] **Gerar JSON auditavel da analise**
   Criar um JSON com metadados do teste, KPIs por grupo, decisao calculada, ranking, guardrails, alertas e catalogo de blocos que a LLM pode usar.
 
-### 6.4. LLM e Relatorio
+### 7.4. LLM e Relatorio
 
-- [ ] **Criar prompt da LLM**
+- [x] **Criar prompt da LLM**
   Escrever prompts em `prompts/` deixando claro que a LLM nao calcula KPIs, nao troca o vencedor e apenas escolhe os blocos explicativos mais relevantes.
 
-- [ ] **Validar escolha da LLM**
+- [x] **Validar escolha da LLM**
   Conferir em Python se os KPIs e combos escolhidos pela LLM existem no catalogo permitido e se a narrativa respeita a decisao calculada.
 
-- [ ] **Gerar graficos principais**
+- [x] **Gerar graficos principais**
   Criar graficos objetivos para lucro liquido, ROI vs lucro, composicao comissao/cashback, rentabilidade por comprador e guardrails de escala.
 
 - [ ] **Montar relatorio final**
   Gerar um relatorio apresentavel com sumario executivo, decisao, justificativa, tabela de KPIs, graficos, riscos, limitacoes e proximo passo recomendado.
 
-### 6.5. Entrega
+### 7.5. Entrega
 
 - [ ] **Registrar resultado em tracking**
   Salvar uma linha por teste analisado em CSV ou Google Sheets, contendo nome do teste, parceiro, periodo, vencedor, resultado e decisao tomada.
