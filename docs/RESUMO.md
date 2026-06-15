@@ -106,38 +106,38 @@ Objetivo: ao final deste checklist, a solucao deve ler os 3 datasets, calcular a
 
 ### 6.1. Base do Projeto
 
-- [ x ] **Organizar estrutura minima do projeto**
+- [X] **Organizar estrutura minima do projeto**
   Manter `data/`, `docs/`, `src/`, `prompts/` e `outputs/`, separando dados de entrada, documentacao, codigo, prompts e arquivos gerados.
 
-- [ x ] **Fazer ETL inicial**
+- [x] **Fazer ETL inicial**
   Criar uma funcao que leia qualquer CSV do case, normalize nomes de colunas, trate datas, limpe campos monetarios, padronize textos e retorne um dataframe pronto para calculo.
 
 ### 6.2. Calculos em Python
 
-- [  ] **Calcular KPIs de decisao**
+- [x] **Calcular KPIs de decisao**
   Implementar os KPIs obrigatorios usados na escolha do vencedor.
 
-  - [  ] **Lucro liquido total**: comissao total - cashback total.
-  - [  ] **ROI**: lucro liquido total / cashback total.
-  - [  ] **Lucro por comprador**: lucro liquido total / compradores totais.
-  - [  ] **GMV**: soma de vendas totais.
-  - [  ] **Compradores totais**: soma de compradores.
+  - [x] **Lucro liquido total**: comissao total - cashback total.
+  - [x] **ROI**: lucro liquido total / cashback total.
+  - [x] **Lucro por comprador**: lucro liquido total / compradores totais.
+  - [x] **GMV**: soma de vendas totais.
+  - [x] **Compradores totais**: soma de compradores.
 
 - [ ] **Calcular KPIs complementares**
-  Implementar os 12 KPIs extras do banco de analise geral, sem repetir os KPIs principais de decisao.
+  Implementar os 11 KPIs extras do banco de analise geral, sem repetir os KPIs principais de decisao.
 
-  - [ ] **Comissao total**: soma de comissao.
-  - [ ] **Cashback total**: soma de cashback.
-  - [ ] **Ticket medio**: GMV / compradores totais.
-  - [ ] **Comissao por comprador**: comissao total / compradores totais.
-  - [ ] **Cashback por comprador**: cashback total / compradores totais.
-  - [ ] **Margem liquida sobre GMV**: lucro liquido total / GMV.
-  - [ ] **Cashback sobre GMV**: cashback total / GMV.
+  - [x] **Comissao total**: soma de comissao.
+  - [x] **Cashback total**: soma de cashback.
+  - [x] **Ticket medio**: GMV / compradores totais.
+  - [x] **Comissao por comprador**: comissao total / compradores totais.
+  - [x] **Cashback por comprador**: cashback total / compradores totais.
+  - [x] **Margem liquida sobre GMV**: lucro liquido total / GMV.
+  - [x] **Cashback sobre GMV**: cashback total / GMV.
   - [ ] **Gap de lucro vs 2o colocado**: diferenca percentual de lucro entre o vencedor e o segundo colocado.
-  - [ ] **Perda de GMV vs maior GMV**: diferenca percentual entre o grupo analisado e o grupo com maior GMV.
-  - [ ] **Perda de compradores vs maior compradores**: diferenca percentual entre o grupo analisado e o grupo com mais compradores.
-  - [ ] **Dias com lucro negativo**: quantidade ou percentual de dias em que o lucro liquido foi menor que zero.
-  - [ ] **Alertas de denominador zero**: identificar cashback, compradores ou GMV zerados antes de calcular divisoes.
+  - [x] **Perda de GMV vs maior GMV**: diferenca percentual entre o grupo analisado e o grupo com maior GMV.
+  - [x] **Perda de compradores vs maior compradores**: diferenca percentual entre o grupo analisado e o grupo com mais compradores.
+  - [x] **Dias com lucro negativo**: quantidade ou percentual de dias em que o lucro liquido foi menor que zero.
+  
 
 ### 6.3. Decisao e Auditoria
 
