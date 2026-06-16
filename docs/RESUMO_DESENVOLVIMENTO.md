@@ -301,7 +301,7 @@ Objetivo: ao final deste checklist, a solucao deve ler os 3 datasets, calcular a
 ### 7.5. Entrega
 
 - [ ] **Registrar resultado em tracking**
-  Salvar uma linha por teste analisado em CSV ou Google Sheets, contendo nome do teste, parceiro, periodo, vencedor, resultado e decisao tomada.
+  Salvar uma linha por teste analisado em Google Sheets, contendo nome do teste, parceiro, periodo, vencedor, resultado e decisao tomada.
 
 - [ ] **Rodar a solucao nos 3 datasets**
   Executar a mesma logica para Parceiro A, Parceiro B e Parceiro C sem alterar codigo entre os arquivos.

@@ -25,6 +25,8 @@ decisao.alertas.
 Se houver vencedor, escreva um paragrafo curto com a decisao. Use
 decisao.vencedor e decisao.recomendacao. Se houver alertas em decisao.alertas,
 mencione-os com linguagem natural.
+Copie o texto de decisao.recomendacao literalmente pelo menos uma vez na
+narrativa.
 
 2. BLOCOS EXPLICATIVOS
 
@@ -43,6 +45,11 @@ Para cada bloco escolhido:
 - os valores estao em kpis_por_grupo: use-os diretamente, sem recalcular;
 - compare os grupos usando esses valores;
 - responda a pergunta_que_responde do bloco em 2 a 4 frases.
+- nao liste apenas os numeros: interprete o que eles significam para a decisao.
+- explique o trade-off principal do bloco, por exemplo impacto financeiro vs
+  eficiencia, lucro vs escala, custo de cashback ou rentabilidade por comprador.
+- quando o vencedor nao liderar um KPI do bloco, explique por que ainda assim a
+  decisao calculada se sustenta, usando guardrails, ranking e alertas.
 
 3. GUARDRAILS
 
@@ -53,8 +60,10 @@ Se algum grupo tiver escala_gmv ou escala_compradores como "alerta" ou
 
 - Sumario executivo: 2 frases com decisao e justificativa principal. Pode usar
   decisao, ranking, guardrails e alertas.
-- Secao por bloco escolhido: titulo + analise comparativa dos grupos. Use apenas
-  os KPIs do bloco.
+- Secao por bloco escolhido: titulo + analise comparativa interpretativa dos
+  grupos. Use apenas os KPIs do bloco. Cada secao deve ter pelo menos uma frase
+  de conclusao explicando por que o bloco favorece, limita ou contextualiza a
+  decisao calculada.
 - Riscos e limitacoes: alertas de escala, empate tecnico, unico elegivel ou
   ausencia de vencedor, se aplicavel. Pode usar decisao, ranking, guardrails e
   alertas.

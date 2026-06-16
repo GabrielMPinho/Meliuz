@@ -20,6 +20,31 @@ def validar_resposta_llm(json_auditavel, resposta_llm):
     def contem(texto, trecho):
         return normalizar_texto(trecho) in normalizar_texto(texto)
 
+    def contem_todos(texto, trechos):
+        return all(contem(texto, trecho) for trecho in trechos)
+
+    def menciona_recomendacao_calculada(narrativa, decisao):
+        vencedor = decisao.get("vencedor")
+
+        if vencedor is None:
+            return contem(narrativa, "nao escalar")
+
+        requisitos = ["escalar", vencedor]
+
+        recomendacao = decisao.get("recomendacao") or ""
+        if contem(recomendacao, "100"):
+            requisitos.append("100")
+
+        return contem_todos(narrativa, requisitos)
+
+    def sugere_escalar_outro_grupo(narrativa, grupo):
+        padroes = [
+            f"escalar {grupo}",
+            f"escalar o {grupo}",
+            f"escalar a {grupo}",
+        ]
+        return any(contem(narrativa, padrao) for padrao in padroes)
+
     def carregar_resposta(resposta):
         if isinstance(resposta, dict):
             return resposta
@@ -88,7 +113,7 @@ def validar_resposta_llm(json_auditavel, resposta_llm):
         for bloco in blocos:
             if bloco in catalogo:
                 for kpi in catalogo[bloco]["kpis_envolvidos"]:
-                    if not contem(narrativa, kpi):
+                    if not menciona_kpi(narrativa, kpi):
                         avisos.append(
                             "A narrativa pode nao ter usado o KPI "
                             f"'{kpi}' do bloco '{bloco}'."
@@ -96,13 +121,46 @@ def validar_resposta_llm(json_auditavel, resposta_llm):
 
         return narrativa
 
+    def menciona_kpi(narrativa, kpi):
+        aliases = {
+            "lucro_liquido": ["lucro_liquido", "lucro liquido"],
+            "roi": ["roi"],
+            "lucro_por_comprador": [
+                "lucro_por_comprador",
+                "lucro por comprador",
+            ],
+            "gmv": ["gmv"],
+            "total_compradores": [
+                "total_compradores",
+                "total compradores",
+                "compradores",
+            ],
+            "cashback_total": ["cashback_total", "cashback total"],
+            "cashback_sobre_gmv": [
+                "cashback_sobre_gmv",
+                "cashback sobre gmv",
+            ],
+            "comissao_por_comprador": [
+                "comissao_por_comprador",
+                "comissao por comprador",
+            ],
+            "cashback_por_comprador": [
+                "cashback_por_comprador",
+                "cashback por comprador",
+            ],
+        }
+
+        return any(
+            contem(narrativa, alias)
+            for alias in aliases.get(kpi, [kpi])
+        )
+
     def validar_decisao(json_auditavel, narrativa, erros):
         decisao = json_auditavel["decisao"]
         vencedor = decisao.get("vencedor")
-        recomendacao = decisao.get("recomendacao")
 
         if vencedor is None:
-            if not contem(narrativa, "nao escalar"):
+            if not menciona_recomendacao_calculada(narrativa, decisao):
                 erros.append(
                     "Sem vencedor, a narrativa deve deixar claro que nao "
                     "recomenda escalar nenhum grupo."
@@ -114,7 +172,7 @@ def validar_resposta_llm(json_auditavel, resposta_llm):
                 f"A narrativa nao menciona o vencedor definido: {vencedor}."
             )
 
-        if recomendacao and not contem(narrativa, recomendacao):
+        if not menciona_recomendacao_calculada(narrativa, decisao):
             erros.append(
                 "A narrativa nao menciona a recomendacao calculada pela "
                 "decisao_final."
@@ -126,7 +184,7 @@ def validar_resposta_llm(json_auditavel, resposta_llm):
         ]
 
         for grupo in outros_grupos:
-            if contem(narrativa, f"escalar {grupo}"):
+            if sugere_escalar_outro_grupo(narrativa, grupo):
                 erros.append(
                     "A narrativa sugere escalar um grupo diferente do "
                     f"vencedor: {grupo}."

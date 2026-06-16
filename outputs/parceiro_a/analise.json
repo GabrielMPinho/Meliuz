@@ -1,0 +1,215 @@
+{
+  "metadados": {
+    "parceiro": "parceiro_a",
+    "periodo_inicio": "2011-01-01",
+    "periodo_fim": "2011-04-02",
+    "total_dias": 92,
+    "grupos": [
+      "grupo_1",
+      "grupo_2",
+      "grupo_3"
+    ]
+  },
+  "kpis_por_grupo": {
+    "grupo_1": {
+      "lucro_liquido": 404711,
+      "roi": 1.7338020083624648,
+      "lucro_por_comprador": 42.01297622755113,
+      "gmv": 5605173,
+      "total_compradores": 9633,
+      "comissao_total": 638135,
+      "cashback_total": 233424,
+      "ticket_medio": 581.8720024914356,
+      "comissao_por_comprador": 66.24467974670404,
+      "cashback_por_comprador": 24.231703519152912,
+      "margem_liquida_gmv": 0.07220312379296767,
+      "cashback_sobre_gmv": 0.041644388139313454,
+      "perda_gmv_maior_grupo": 0.17399175579322637,
+      "perda_compradores_maior_grupo": 0.15574057843996494,
+      "dias_lucro_negativo": 0
+    },
+    "grupo_2": {
+      "lucro_liquido": 357519,
+      "roi": 0.9645496264760872,
+      "lucro_por_comprador": 33.06075457739967,
+      "gmv": 6423096,
+      "total_compradores": 10814,
+      "comissao_total": 728178,
+      "cashback_total": 370659,
+      "ticket_medio": 593.96116145737,
+      "comissao_por_comprador": 67.33660070279268,
+      "cashback_por_comprador": 34.27584612539301,
+      "margem_liquida_gmv": 0.05566147540064791,
+      "cashback_sobre_gmv": 0.057707217827664414,
+      "perda_gmv_maior_grupo": 0.053458251987663755,
+      "perda_compradores_maior_grupo": 0.05223488168273444,
+      "dias_lucro_negativo": 0
+    },
+    "grupo_3": {
+      "lucro_liquido": 264287,
+      "roi": 0.5247954725972994,
+      "lucro_por_comprador": 23.162751971954425,
+      "gmv": 6785856,
+      "total_compradores": 11410,
+      "comissao_total": 767887,
+      "cashback_total": 503600,
+      "ticket_medio": 594.7288343558282,
+      "comissao_por_comprador": 67.29947414548641,
+      "cashback_por_comprador": 44.13672217353199,
+      "margem_liquida_gmv": 0.03894674452272492,
+      "cashback_sobre_gmv": 0.074213186958285,
+      "perda_gmv_maior_grupo": 0.0,
+      "perda_compradores_maior_grupo": 0.0,
+      "dias_lucro_negativo": 0
+    }
+  },
+  "decisao": {
+    "status": "vencedor_definido",
+    "vencedor": "grupo_1",
+    "recomendacao": "Escalar grupo_1 para 100% do trafego.",
+    "motivo": "consenso",
+    "criterio_desempate": null,
+    "candidatos": {
+      "candidato_lucro": "grupo_1",
+      "candidato_eficiencia": "grupo_1"
+    },
+    "empate_tecnico": false,
+    "gap_lucro": null,
+    "gap_roi": null,
+    "elegibilidade": {
+      "grupo_1": true,
+      "grupo_2": true,
+      "grupo_3": true
+    },
+    "alertas": [],
+    "kpis_vencedor": {
+      "lucro_liquido": 404711,
+      "roi": 1.7338020083624648,
+      "lucro_por_comprador": 42.01297622755113,
+      "gmv": 5605173,
+      "total_compradores": 9633
+    },
+    "gap_lucro_segundo": 0.11660666500292802
+  },
+  "ranking": [
+    {
+      "grupo": "grupo_1",
+      "lucro_liquido": 404711,
+      "roi": 1.7338020083624648,
+      "elegivel": true
+    },
+    {
+      "grupo": "grupo_2",
+      "lucro_liquido": 357519,
+      "roi": 0.9645496264760872,
+      "elegivel": true
+    },
+    {
+      "grupo": "grupo_3",
+      "lucro_liquido": 264287,
+      "roi": 0.5247954725972994,
+      "elegivel": true
+    }
+  ],
+  "guardrails": {
+    "grupo_1": {
+      "escala_gmv": "ok",
+      "escala_compradores": "ok",
+      "elegivel": true
+    },
+    "grupo_2": {
+      "escala_gmv": "ok",
+      "escala_compradores": "ok",
+      "elegivel": true
+    },
+    "grupo_3": {
+      "escala_gmv": "ok",
+      "escala_compradores": "ok",
+      "elegivel": true
+    }
+  },
+  "alertas": [],
+  "catalogo_blocos": {
+    "decisao_impacto_eficiencia_escala": {
+      "id": "decisao_impacto_eficiencia_escala",
+      "nome": "Lucro liquido total + ROI + Lucro por comprador + GMV",
+      "kpis_envolvidos": [
+        "lucro_liquido",
+        "roi",
+        "lucro_por_comprador",
+        "gmv"
+      ],
+      "pergunta_que_responde": "O grupo combina impacto financeiro, eficiencia, rentabilidade unitaria e escala?"
+    },
+    "decisao_lucro_volume": {
+      "id": "decisao_lucro_volume",
+      "nome": "Lucro liquido total + GMV + Compradores totais",
+      "kpis_envolvidos": [
+        "lucro_liquido",
+        "gmv",
+        "total_compradores"
+      ],
+      "pergunta_que_responde": "O lucro veio mantendo volume relevante?"
+    },
+    "decisao_eficiencia_cashback": {
+      "id": "decisao_eficiencia_cashback",
+      "nome": "ROI + Cashback total + Cashback sobre GMV",
+      "kpis_envolvidos": [
+        "roi",
+        "cashback_total",
+        "cashback_sobre_gmv"
+      ],
+      "pergunta_que_responde": "O cashback investido foi eficiente ou caro demais?"
+    },
+    "decisao_rentabilidade_unitaria": {
+      "id": "decisao_rentabilidade_unitaria",
+      "nome": "Lucro por comprador + Comissao por comprador + Cashback por comprador",
+      "kpis_envolvidos": [
+        "lucro_por_comprador",
+        "comissao_por_comprador",
+        "cashback_por_comprador"
+      ],
+      "pergunta_que_responde": "Cada comprador gera valor suficiente depois do incentivo?"
+    },
+    "decisao_origem_volume": {
+      "id": "decisao_origem_volume",
+      "nome": "GMV + Compradores totais + Ticket medio",
+      "kpis_envolvidos": [
+        "gmv",
+        "total_compradores",
+        "ticket_medio"
+      ],
+      "pergunta_que_responde": "O volume veio de muitos compradores ou de compras maiores?"
+    },
+    "analise_conversao_gmv_lucro": {
+      "id": "analise_conversao_gmv_lucro",
+      "nome": "GMV + Margem liquida sobre GMV + Lucro liquido total",
+      "kpis_envolvidos": [
+        "gmv",
+        "margem_liquida_gmv",
+        "lucro_liquido"
+      ],
+      "pergunta_que_responde": "O grupo vende muito e transforma esse volume em lucro?"
+    },
+    "analise_custo_incentivo": {
+      "id": "analise_custo_incentivo",
+      "nome": "Cashback total + Cashback sobre GMV + ROI",
+      "kpis_envolvidos": [
+        "cashback_total",
+        "cashback_sobre_gmv",
+        "roi"
+      ],
+      "pergunta_que_responde": "O incentivo foi caro demais ou eficiente?"
+    },
+    "analise_tradeoff_lucro_roi_gmv": {
+      "id": "analise_tradeoff_lucro_roi_gmv",
+      "nome": "Lucro liquido total + ROI + GMV",
+      "kpis_envolvidos": [
+        "lucro_liquido",
+        "roi",
+        "gmv"
+      ],
+      "pergunta_que_responde": "O resultado combina impacto financeiro, eficiencia e escala?"
+    }
+  }
+}

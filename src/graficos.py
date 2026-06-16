@@ -56,6 +56,25 @@ def gerar_graficos(json_auditavel, output_dir):
     def formatar_roi(valor, _posicao):
         return f"{valor:.1f}x"
 
+    def formatar_percentual_texto(valor):
+        return f"{valor:.1%}".replace(".", ",")
+
+    def adicionar_rotulos_horizontais(ax, barras, valores):
+        limite_x = ax.get_xlim()[1]
+
+        for barra, valor in zip(barras, valores):
+            largura = barra.get_width()
+            x = min(largura + limite_x * 0.015, limite_x * 0.98)
+            ax.text(
+                x,
+                barra.get_y() + barra.get_height() / 2,
+                formatar_percentual_texto(valor),
+                va="center",
+                ha="left",
+                fontsize=9,
+                color="#111827",
+            )
+
     def cor_grupo(grupo):
         if not json_auditavel["guardrails"][grupo]["elegivel"]:
             return COR_INELEGIVEL
@@ -200,12 +219,20 @@ def gerar_graficos(json_auditavel, output_dir):
         ax_lucro.set_xticklabels(grupos)
         ax_lucro.set_ylabel("Lucro líquido")
         ax_roi.set_ylabel("ROI")
+        ax_lucro.set_ylim(0, max(lucro) * 1.15)
+        ax_roi.set_ylim(0, max(roi) * 1.15)
         ax_lucro.yaxis.set_major_formatter(
             ticker.FuncFormatter(formatar_reais)
         )
         ax_roi.yaxis.set_major_formatter(ticker.FuncFormatter(formatar_roi))
-        ax_lucro.legend(loc="upper left", frameon=False)
-        ax_roi.legend(loc="upper right", frameon=False)
+        ax_lucro.legend(
+            [barras_lucro, barras_roi],
+            ["Lucro liquido", "ROI"],
+            loc="upper center",
+            bbox_to_anchor=(0.5, 0.98),
+            ncol=2,
+            frameon=False,
+        )
         ajustar_rotulos_x(ax_lucro, grupos)
         limpar_eixos(ax_lucro)
         ax_roi.grid(False)
@@ -319,7 +346,10 @@ def gerar_graficos(json_auditavel, output_dir):
         salvar(fig, nome_arquivo)
 
     def grafico_guardrails_escala():
-        titulo = "Guardrails de Escala por Grupo"
+        titulo = (
+            "Guardrails de Escala: Perda vs Maior Grupo\n"
+            "0% = grupo com maior GMV e compradores"
+        )
         nome_arquivo = "guardrails_escala.png"
         grupos = grupos_validos(
             [
@@ -351,7 +381,7 @@ def gerar_graficos(json_auditavel, output_dir):
             for grupo in grupos
         ]
 
-        fig, ax = plt.subplots(figsize=(9, altura_figura_horizontal(grupos)))
+        fig, ax = plt.subplots(figsize=(9.5, altura_figura_horizontal(grupos)))
         barras_gmv = ax.barh(
             [posicao - altura / 2 for posicao in posicoes],
             perda_gmv,
@@ -373,6 +403,18 @@ def gerar_graficos(json_auditavel, output_dir):
         for barra, alpha in zip(barras_compradores, alphas):
             barra.set_alpha(alpha)
 
+        limite_x = min(
+            1,
+            max(0.45, max(perda_gmv + perda_compradores + [0.40]) * 1.15),
+        )
+        ax.set_xlim(0, limite_x)
+        adicionar_rotulos_horizontais(ax, barras_gmv, perda_gmv)
+        adicionar_rotulos_horizontais(
+            ax,
+            barras_compradores,
+            perda_compradores,
+        )
+
         ax.axvline(
             0.20,
             color=COR_ALERTA,
@@ -390,10 +432,25 @@ def gerar_graficos(json_auditavel, output_dir):
         ax.set_title(titulo)
         ax.set_yticks(posicoes)
         ax.set_yticklabels(grupos)
-        ax.set_xlim(0, 1)
-        ax.set_xlabel("Perda vs maior valor observado")
+        ax.set_xlabel(
+            "Perda percentual em relacao ao maior GMV/compradores"
+        )
         ax.xaxis.set_major_formatter(ticker.FuncFormatter(formatar_percentual))
-        ax.legend(frameon=False)
+        ax.legend(
+            loc="upper left",
+            bbox_to_anchor=(1.01, 1),
+            frameon=False,
+        )
+        fig.text(
+            0.12,
+            0.02,
+            "Leitura: o grupo com 0% e o grupo com maior GMV e compradores "
+            "do teste; o vencedor pode ter perda de escala se compensar em "
+            "lucro e ROI.",
+            fontsize=9,
+            color="#4B5563",
+        )
+        fig.subplots_adjust(bottom=0.22)
         limpar_eixos(ax)
         salvar(fig, nome_arquivo)
 

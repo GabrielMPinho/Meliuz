@@ -1,0 +1,46 @@
+{
+  "valido": true,
+  "erros": [],
+  "avisos": [],
+  "resposta": {
+    "blocos_escolhidos": [
+      "decisao_impacto_eficiencia_escala",
+      "decisao_eficiencia_cashback",
+      "decisao_rentabilidade_unitaria"
+    ],
+    "narrativa_markdown": "### Sum\u00e1rio executivo\nO grupo **grupo_1** foi definido como vencedor, e a recomenda\u00e7\u00e3o calculada \u00e9 **\"Escalar grupo_1 para 100% do trafego.\"**. A decis\u00e3o se sustenta porque ele foi o \u00fanico grupo eleg\u00edvel; o alerta registrado confirma essa limita\u00e7\u00e3o: **\"Apenas um grupo passou nos criterios de elegibilidade.\"**\n\n### Lucro l\u00edquido total + ROI + Lucro por comprador + GMV\nNo bloco **Lucro liquido total + ROI + Lucro por comprador + GMV**, o **grupo_1** re\u00fane **R$ 34.769,00** de lucro l\u00edquido, **0,40x** de ROI, **R$ 7,64** de lucro por comprador e **R$ 1.738.460,00** de GMV. J\u00e1 o **grupo_2** n\u00e3o entrega lucro l\u00edquido, fica com **0,00x** de ROI e **R$ 0,00** de lucro por comprador, al\u00e9m de GMV de **R$ 1.685.235,00**. O trade-off aqui \u00e9 claro: o grupo vencedor combina impacto financeiro positivo com efici\u00eancia e escala, enquanto o outro grupo n\u00e3o transforma volume em resultado; por isso, este bloco favorece diretamente a decis\u00e3o calculada.\n\n### ROI + Cashback total + Cashback sobre GMV\nNo bloco **ROI + Cashback total + Cashback sobre GMV**, o **grupo_1** opera com **0,40x** de ROI, **R$ 86.924,00** de cashback total e **5,0%** de cashback sobre GMV. O **grupo_2** apresenta **0,00x** de ROI, **R$ 117.967,00** de cashback total e **7,0%** de cashback sobre GMV, ou seja, consome mais incentivo para sustentar um resultado sem retorno. A leitura do bloco \u00e9 que o grupo vencedor foi mais eficiente no uso do cashback; mesmo n\u00e3o liderando em gasto absoluto de incentivo, ele converteu esse investimento em retorno financeiro, o que explica por que a decis\u00e3o calculada se mant\u00e9m.\n\n### Lucro por comprador + Comissao por comprador + Cashback por comprador\nNo bloco **Lucro por comprador + Comissao por comprador + Cashback por comprador**, o **grupo_1** entrega **R$ 7,64** de lucro por comprador, com **R$ 26,75** de comiss\u00e3o por comprador e **R$ 19,11** de cashback por comprador. O **grupo_2** fica em **R$ 0,00** de lucro por comprador, com **R$ 26,09** de comiss\u00e3o por comprador e **R$ 26,09** de cashback por comprador. O principal trade-off \u00e9 rentabilidade unit\u00e1ria versus custo do incentivo: o vencedor gera valor por comprador mesmo com incentivo relevante, enquanto o outro grupo devolve todo o ganho em cashback e n\u00e3o captura lucro unit\u00e1rio; isso refor\u00e7a a superioridade do grupo_1 na elegibilidade e no ranking.\n\n### Riscos e limita\u00e7\u00f5es\nA principal limita\u00e7\u00e3o \u00e9 que houve **apenas um grupo eleg\u00edvel**, ent\u00e3o a decis\u00e3o n\u00e3o foi sustentada por disputa entre dois candidatos equivalentes. Nos guardrails, ambos os grupos est\u00e3o com **escala_gmv = ok** e **escala_compradores = ok**, mas o **grupo_2** permanece ineleg\u00edvel, ent\u00e3o n\u00e3o h\u00e1 base para escal\u00e1-lo mesmo com volume relevante. N\u00e3o houve empate t\u00e9cnico, e o ranking j\u00e1 posiciona o **grupo_1** \u00e0 frente com lucro l\u00edquido de **R$ 34.769,00**.\n\n### Pr\u00f3ximo passo recomendado\nEscalar **grupo_1** para 100% do tr\u00e1fego e manter monitoramento de ROI, lucro l\u00edquido e elegibilidade para validar a estabilidade do resultado em produ\u00e7\u00e3o."
+  },
+  "blocos_validados": [
+    {
+      "id": "decisao_impacto_eficiencia_escala",
+      "nome": "Lucro liquido total + ROI + Lucro por comprador + GMV",
+      "kpis_envolvidos": [
+        "lucro_liquido",
+        "roi",
+        "lucro_por_comprador",
+        "gmv"
+      ],
+      "pergunta_que_responde": "O grupo combina impacto financeiro, eficiencia, rentabilidade unitaria e escala?"
+    },
+    {
+      "id": "decisao_eficiencia_cashback",
+      "nome": "ROI + Cashback total + Cashback sobre GMV",
+      "kpis_envolvidos": [
+        "roi",
+        "cashback_total",
+        "cashback_sobre_gmv"
+      ],
+      "pergunta_que_responde": "O cashback investido foi eficiente ou caro demais?"
+    },
+    {
+      "id": "decisao_rentabilidade_unitaria",
+      "nome": "Lucro por comprador + Comissao por comprador + Cashback por comprador",
+      "kpis_envolvidos": [
+        "lucro_por_comprador",
+        "comissao_por_comprador",
+        "cashback_por_comprador"
+      ],
+      "pergunta_que_responde": "Cada comprador gera valor suficiente depois do incentivo?"
+    }
+  ]
+}
