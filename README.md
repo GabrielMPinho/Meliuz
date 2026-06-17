@@ -29,6 +29,7 @@ Dado um CSV de um teste A/B de cashback (grupo de usuarios x data x compradores 
 
 - **Python** 3.11+ ([python.org](https://www.python.org/downloads/))
 - **Node.js** 18+ ([nodejs.org](https://nodejs.org/))
+- **Clonar este repositorio** git clone <url_do_repo>
 
 ## Passo a passo
 
