@@ -84,14 +84,11 @@ Expandir o banco de métricas com KPIs setoriais (ex.: CAC, LTV, margem por cana
 ### 5. Autenticação e multitenancy
 Adicionar login (Google OAuth, Magic Link) para que diferentes times/parceiros acessem apenas suas próprias análises, com histórico persistido e dashboard consolidado.
 
-### 6. CI/CD com testes automatizados
-Pipeline de integração contínua rodando lint, type check e testes unitários no backend (pytest) e frontend (vitest) a cada push. Deploy automatizado via GitHub Actions para uma VPS ou serviço gerenciado (Railway, Fly.io).
-
-### 7. Cache e fila de processamento
-Análises longas (especialmente com LLM e Sheets) deveriam rodar em background com fila (Redis + Celery ou similar), permitindo que o usuário feche a página e volte depois para ver o resultado, além de evitar timeouts em CSVs grandes.
+### 6. Cache e fila de processamento
+Análises longas (especialmente com LLM e Sheets) deveriam rodar em background com fila (Redis), permitindo que o usuário feche a página e volte depois para ver o resultado, além de evitar timeouts em CSVs grandes.
 
 ### 8. Monitoramento e observabilidade
-Logs estruturados, métricas de uso (quantas análises, tempo médio, taxa de erro) e tracing (OpenTelemetry) para identificar gargalos. Um health check endpoint e dashboard (Grafana) dariam visibilidade do sistema em produção.
+Logs estruturados, base de dados, métricas de uso (quantas análises, tempo médio, taxa de erro) e tracing (OpenTelemetry) para identificar gargalos. Um health check endpoint e dashboards dariam visibilidade do sistema em produção.
 
 ## Estrutura de saída
 
