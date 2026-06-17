@@ -1,0 +1,46 @@
+{
+  "valido": true,
+  "erros": [],
+  "avisos": [],
+  "resposta": {
+    "blocos_escolhidos": [
+      "decisao_impacto_eficiencia_escala",
+      "decisao_lucro_volume",
+      "decisao_eficiencia_cashback"
+    ],
+    "narrativa_markdown": "### Sum\u00e1rio executivo\nO vencedor definido \u00e9 o **grupo_1**, e a recomenda\u00e7\u00e3o final \u00e9: **Escalar grupo_1 para 100% do trafego.** A decis\u00e3o se sustenta pelo consenso entre lucro e efici\u00eancia, com o grupo_1 liderando em lucro l\u00edquido, ROI e lucro por comprador, sem alertas de guardrail ou risco de escala.\n\n### Lucro l\u00edquido total + ROI + Lucro por comprador + GMV\nO **grupo_1** combina **R$ 404.711,00** de lucro l\u00edquido, **1,73x** de ROI e **R$ 42,01** de lucro por comprador, superando **grupo_2** e **grupo_3** em rentabilidade e retorno. Em GMV, o **grupo_1** registra **R$ 5.605.173,00**, abaixo de **grupo_2** e **grupo_3**, mas ainda com volume relevante para sustentar a decis\u00e3o. Aqui, o trade-off principal \u00e9 claro: o vencedor entrega melhor efici\u00eancia econ\u00f4mica sem depender do maior volume, o que favorece a escala com mais seguran\u00e7a.\n\n### Lucro l\u00edquido total + GMV + Compradores totais\nNo recorte de volume, o **grupo_1** n\u00e3o lidera: **grupo_2** tem **R$ 6.423.096,00** de GMV e **10.814 compradores**, enquanto o **grupo_3** chega a **R$ 6.785.856,00** de GMV e **11.410 compradores**, ambos acima do vencedor. Ainda assim, o **grupo_1** mant\u00e9m **R$ 404.711,00** de lucro l\u00edquido, que \u00e9 o maior entre os tr\u00eas, mostrando que o resultado n\u00e3o depende de inflar volume para gerar retorno. Isso refor\u00e7a que a decis\u00e3o favorece o grupo com melhor qualidade de resultado, e n\u00e3o apenas o maior tamanho de base.\n\n### ROI + Cashback total + Cashback sobre GMV\nNa efici\u00eancia do incentivo, o **grupo_1** tamb\u00e9m \u00e9 o melhor equil\u00edbrio: tem **1,73x** de ROI, contra **0,96x** no **grupo_2** e **0,52x** no **grupo_3**. O **grupo_1** concentra **R$ 233.424,00** de cashback total e **4,2%** de cashback sobre GMV, abaixo do **grupo_2** (**R$ 370.659,00** e **5,8%**) e do **grupo_3** (**R$ 503.600,00** e **7,4%**). Isso indica que o vencedor gera mais retorno com menor press\u00e3o de incentivo, enquanto os demais grupos ficaram mais caros em cashback para entregar menor efici\u00eancia financeira.\n\n### Riscos e limita\u00e7\u00f5es\nN\u00e3o h\u00e1 alertas de guardrail: todos os grupos est\u00e3o eleg\u00edveis e com **escala_gmv = ok** e **escala_compradores = ok**, sem empate t\u00e9cnico e sem restri\u00e7\u00e3o de escalabilidade. O ranking tamb\u00e9m confirma a ordem do resultado, com **grupo_1** \u00e0 frente de **grupo_2** e **grupo_3**, ent\u00e3o a recomenda\u00e7\u00e3o calculada n\u00e3o enfrenta limita\u00e7\u00f5es operacionais nos dados fornecidos.\n\n### Pr\u00f3ximo passo recomendado\nExecutar a ativa\u00e7\u00e3o integral do **grupo_1** e monitorar sua manuten\u00e7\u00e3o de ROI e lucro l\u00edquido ap\u00f3s a expans\u00e3o para 100% do tr\u00e1fego."
+  },
+  "blocos_validados": [
+    {
+      "id": "decisao_impacto_eficiencia_escala",
+      "nome": "Lucro liquido total + ROI + Lucro por comprador + GMV",
+      "kpis_envolvidos": [
+        "lucro_liquido",
+        "roi",
+        "lucro_por_comprador",
+        "gmv"
+      ],
+      "pergunta_que_responde": "O grupo combina impacto financeiro, eficiencia, rentabilidade unitaria e escala?"
+    },
+    {
+      "id": "decisao_lucro_volume",
+      "nome": "Lucro liquido total + GMV + Compradores totais",
+      "kpis_envolvidos": [
+        "lucro_liquido",
+        "gmv",
+        "total_compradores"
+      ],
+      "pergunta_que_responde": "O lucro veio mantendo volume relevante?"
+    },
+    {
+      "id": "decisao_eficiencia_cashback",
+      "nome": "ROI + Cashback total + Cashback sobre GMV",
+      "kpis_envolvidos": [
+        "roi",
+        "cashback_total",
+        "cashback_sobre_gmv"
+      ],
+      "pergunta_que_responde": "O cashback investido foi eficiente ou caro demais?"
+    }
+  ]
+}

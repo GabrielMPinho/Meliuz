@@ -1,0 +1,57 @@
+{
+  "valido": true,
+  "erros": [],
+  "avisos": [],
+  "resposta": {
+    "blocos_escolhidos": [
+      "decisao_impacto_eficiencia_escala",
+      "decisao_lucro_volume",
+      "decisao_eficiencia_cashback",
+      "decisao_rentabilidade_unitaria"
+    ],
+    "narrativa_markdown": "## Sum\u00e1rio executivo\nO **grupo_1** foi o vencedor definido no teste, e a recomenda\u00e7\u00e3o final \u00e9 **\"Escalar grupo_1 para 100% do trafego.\"**. A decis\u00e3o se sustenta porque o grupo_1 lidera em lucro l\u00edquido, ROI, lucro por comprador e GMV, enquanto os demais grupos ficam atr\u00e1s em resultado financeiro e efici\u00eancia; al\u00e9m disso, h\u00e1 dois grupos com guardrails de escala em alerta, o que refor\u00e7a a prefer\u00eancia pelo grupo_1.\n\n## Lucro l\u00edquido total + ROI + Lucro por comprador + GMV\nO grupo_1 combina **R$ 286.570,00** de lucro l\u00edquido com **1,75x** de ROI, **R$ 35,87** de lucro por comprador e **R$ 4.093.818,00** de GMV, formando o melhor conjunto de impacto financeiro e escala entre os tr\u00eas grupos. O grupo_2 entrega **R$ 143.157,00** de lucro l\u00edquido, **0,83x** de ROI, **R$ 26,26** de lucro por comprador e **R$ 2.863.019,00** de GMV, enquanto o grupo_3 fica em **R$ 52.593,00**, **0,22x**, **R$ 10,46** e **R$ 2.629.963,00**, respectivamente.\nA leitura desse bloco \u00e9 direta: o grupo_1 n\u00e3o s\u00f3 gera mais lucro total, como tamb\u00e9m converte melhor esse volume em retorno e valor unit\u00e1rio por comprador. Isso favorece a decis\u00e3o calculada porque o vencedor lidera os quatro sinais do bloco e entrega o melhor equil\u00edbrio entre rentabilidade e escala.\n\n## Lucro l\u00edquido total + GMV + Compradores totais\nO grupo_1 tamb\u00e9m lidera em volume relevante, com **R$ 286.570,00** de lucro l\u00edquido, **R$ 4.093.818,00** de GMV e **7.990 compradores**. O grupo_2 registra **R$ 143.157,00**, **R$ 2.863.019,00** e **5.452 compradores**, enquanto o grupo_3 mostra **R$ 52.593,00**, **R$ 2.629.963,00** e **5.029 compradores**.\nEsse bloco mostra que o lucro do grupo_1 n\u00e3o veio de uma base pequena: ele combina maior volume transacionado e maior base de compradores. Em contraste, os demais grupos perdem tanto em resultado financeiro quanto em escala, ent\u00e3o o vencedor sustenta a recomenda\u00e7\u00e3o com mais for\u00e7a operacional.\n\n## ROI + Cashback total + Cashback sobre GMV\nEm efici\u00eancia de incentivo, o grupo_1 apresenta **1,75x** de ROI, **R$ 163.751,00** de cashback total e **4,0%** de cashback sobre GMV. O grupo_2 fica em **0,83x**, **R$ 171.778,00** e **6,0%**, e o grupo_3 em **0,22x**, **R$ 236.697,00** e **9,0%**.\nAqui, o trade-off \u00e9 claro: o grupo_1 entrega o melhor retorno com menor intensidade de cashback sobre a receita, enquanto os grupos 2 e 3 gastam mais incentivo proporcionalmente e ainda assim geram menos efici\u00eancia. Mesmo quando o grupo_2 tem cashback total pr\u00f3ximo ao vencedor, ele n\u00e3o converte esse gasto em retorno equivalente, o que refor\u00e7a por que a decis\u00e3o favorece o grupo_1.\n\n## Lucro por comprador + Comiss\u00e3o por comprador + Cashback por comprador\nNo n\u00edvel unit\u00e1rio, o grupo_1 gera **R$ 35,87** de lucro por comprador, com **R$ 56,36** de comiss\u00e3o por comprador e **R$ 20,49** de cashback por comprador. O grupo_2 entrega **R$ 26,26**, **R$ 57,77** e **R$ 31,51**, enquanto o grupo_3 fica em **R$ 10,46**, **R$ 57,52** e **R$ 47,07**.\nEsse bloco evidencia que o vencedor captura mais valor por comprador mesmo sem ser o mais agressivo em cashback por pessoa; j\u00e1 o grupo_3 converte uma parcela maior em incentivo por comprador, mas isso se traduz no pior lucro unit\u00e1rio. A decis\u00e3o continua bem sustentada porque o grupo_1 equilibra melhor a remunera\u00e7\u00e3o do tr\u00e1fego com gera\u00e7\u00e3o de valor, enquanto os outros grupos t\u00eam menor rentabilidade por comprador.\n\n## Riscos e limita\u00e7\u00f5es\nOs guardrails mostram **alerta** de escala de GMV e de compradores para os grupos **2** e **3**, o que limita a leitura de crescimento desses cen\u00e1rios. N\u00e3o h\u00e1 alertas registrados na decis\u00e3o nem empate t\u00e9cnico, e todos os grupos s\u00e3o eleg\u00edveis; ainda assim, o ranking mant\u00e9m o grupo_1 na frente em lucro l\u00edquido e ROI, com os demais grupos atr\u00e1s.\n\n## Pr\u00f3ximo passo recomendado\nEscalar o **grupo_1** para 100% do tr\u00e1fego e acompanhar a evolu\u00e7\u00e3o de lucro, ROI e GMV para confirmar a manuten\u00e7\u00e3o do desempenho em escala."
+  },
+  "blocos_validados": [
+    {
+      "id": "decisao_impacto_eficiencia_escala",
+      "nome": "Lucro liquido total + ROI + Lucro por comprador + GMV",
+      "kpis_envolvidos": [
+        "lucro_liquido",
+        "roi",
+        "lucro_por_comprador",
+        "gmv"
+      ],
+      "pergunta_que_responde": "O grupo combina impacto financeiro, eficiencia, rentabilidade unitaria e escala?"
+    },
+    {
+      "id": "decisao_lucro_volume",
+      "nome": "Lucro liquido total + GMV + Compradores totais",
+      "kpis_envolvidos": [
+        "lucro_liquido",
+        "gmv",
+        "total_compradores"
+      ],
+      "pergunta_que_responde": "O lucro veio mantendo volume relevante?"
+    },
+    {
+      "id": "decisao_eficiencia_cashback",
+      "nome": "ROI + Cashback total + Cashback sobre GMV",
+      "kpis_envolvidos": [
+        "roi",
+        "cashback_total",
+        "cashback_sobre_gmv"
+      ],
+      "pergunta_que_responde": "O cashback investido foi eficiente ou caro demais?"
+    },
+    {
+      "id": "decisao_rentabilidade_unitaria",
+      "nome": "Lucro por comprador + Comissao por comprador + Cashback por comprador",
+      "kpis_envolvidos": [
+        "lucro_por_comprador",
+        "comissao_por_comprador",
+        "cashback_por_comprador"
+      ],
+      "pergunta_que_responde": "Cada comprador gera valor suficiente depois do incentivo?"
+    }
+  ]
+}

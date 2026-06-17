@@ -9,7 +9,12 @@ Dado um CSV de um teste A/B de cashback (grupo de usuarios x data x compradores 
 3. Envia um JSON estruturado para a OpenAI, que retorna uma narrativa analitica explicando a decisao.
 4. Gera graficos, um relatorio em PDF com identidade visual Meliuz e registra o resultado em uma planilha Google Sheets.
 
-**Stack:** Python + pandas + matplotlib + reportlab + OpenAI API + Playwright (Google Sheets).
+**Stack:** Python + pandas + matplotlib + reportlab + OpenAI API + Playwright (Google Sheets) + React (frontend web).
+
+## Documentação técnica
+
+- **`docs/RESUMO_DESENVOLVIMENTO.md`** — documentação completa do projeto: schema do CSV, banco de KPIs (decisão e complementares), regra de decisão com parâmetros e critérios, checklist de implementação.
+- **`estudo/`** — notebooks Jupyter utilizados durante a fase de exploração e validação dos dados.
 
 **Output esperado por parceiro analisado:**
 - `outputs/<parceiro>/analise.json` — JSON auditavel com todos os KPIs, ranking, alertas e decisao.
@@ -18,116 +23,85 @@ Dado um CSV de um teste A/B de cashback (grupo de usuarios x data x compradores 
 - `outputs/<parceiro>/relatorio.pdf` — Relatorio em PDF com identidade visual, graficos e rodape com assinatura + data.
 - Planilha de sua escolha atualizada no GoogleSheets
 
-## Como rodar (passo a passo para qualquer maquina)
+## Como rodar (interface web)
 
-### 1. Instalar Python
+## Pré-requisitos
 
-Baixe o instalador em https://www.python.org/downloads/ (versao 3.11 ou superior).
-Durante a instalacao, marque **"Add Python to PATH"** e clique em Instalar.
+- **Python** 3.11+ ([python.org](https://www.python.org/downloads/))
+- **Node.js** 18+ ([nodejs.org](https://nodejs.org/))
 
-Para confirmar, abra o terminal (PowerShell) e digite:
-
-```powershell
-python --version
-```
-
-### 2. Baixar o projeto
-
-Fac¸a o download dos arquivos ou clone o repositorio.
-
-Entre na pasta do projeto:
+## Passo a passo
 
 ```powershell
-cd caminho\para\Meliuz
-```
+# 1. Instalar dependências Python
+pip install -r requirements.txt
 
-### 3. Configurar arquivos
+# 2. Instalar navegador para Google Sheets
+python -m playwright install chromium
 
-**3.1. Arquivo `.env`**
+# 3. Instalar dependências do frontend
+cd frontend
+npm install
+cd ..
 
-Crie o arquivo `.env` na raiz do projeto com o seguinte conteudo:
-
-```env
-OPENAI_API_KEY=sk-sua_chave_real_da_openai_aqui
+# 4. Criar arquivo .env
+@"
+OPENAI_API_KEY=sk-sua_chave_openai
 OPENAI_MODEL=gpt-5.4-mini
 OPENAI_MAX_OUTPUT_TOKENS=5000
-MELIUZ_SHEETS_URL=https://docs.google.com/spreadsheets/d/ID_DA_SUA_PLANILHA/edit?gid=0#gid=0
+MELIUZ_SHEETS_URL=https://docs.google.com/spreadsheets/d/ID_DA_PLANILHA/edit?gid=0#gid=0
+"@ | Out-File -FilePath .env -Encoding utf8
 ```
 
-- `OPENAI_API_KEY`: sua chave da OpenAI (crie em https://platform.openai.com/api-keys).
-- `OPENAI_MODEL`: modelo da OpenAI (`gpt-5.4-mini` e o mais barato; `gpt-5.5` e o recomendado para producao).
-- `MELIUZ_SHEETS_URL`: URL da planilha Google Sheets que recebera o tracking. A planilha precisa estar **publica** e com permissao de **edicao para qualquer pessoa com o link**.
-
-
-**3.2. Dados de entrada**
-
-Coloque os CSVs dos testes A/B dentro da pasta `data/`. O projeto ja vem com 3 datasets de exemplo:
-
-- `data/dataset_01_parceiroA.csv`
-- `data/dataset_02_parceiroB.csv`
-- `data/dataset_03_parceiroC.csv`
-
-### 4. Instalar dependencias
-
-No terminal (dentro da pasta do projeto):
+A planilha do Google Sheets precisa estar com permissão de **edição para qualquer pessoa com o link**.
 
 ```powershell
-pip install -r requirements.txt
+# 5. Rodar (sobe API + frontend juntos)
+cd frontend
+npm run dev
 ```
 
-### 5. Instalar navegador para Google Sheets
+Acesse **http://localhost:3000**, clique ou arraste um CSV para iniciar a análise.
 
-O projeto usa Playwright para atualizar a planilha automaticamente. Execute:
+## Próximos passos
 
-```powershell
-python -m playwright install chromium
+### 1. Melhorar frontend
+A interface atual é funcional mas minimalista. Um redesign com componentes mais sofisticados, feedback visual durante o processamento (barra de progresso real, não apenas texto), tratamento de erros mais amigável e responsividade para mobile tornariam a experiência do usuário muito mais profissional.
+
+### 2. Dockerizar o projeto
+Empacotar a aplicação em containers Docker elimina a necessidade de instalar Python, Node.js e Playwright manualmente. Um `docker compose up` seria suficiente para subir tudo, garantindo consistência entre ambientes (desenvolvimento, staging, produção) e facilitando o deploy em qualquer cloud.
+
+### 3. Chatbot no frontend
+Implementar uma interface de chat onde o usuário possa "conversar com os dados":
+- Fazer perguntas em linguagem natural sobre o CSV enviado (ex.: "qual grupo teve maior ROI?", "mostre a evolução diária do lucro").
+- Solicitar análises específicas sem precisar reenviar o arquivo.
+- Isso agregaria valor principalmente para times de negócio que não têm familiaridade com ferramentas analíticas tradicionais.
+
+### 4. Mais KPIs e combos de KPIs
+Expandir o banco de métricas com KPIs setoriais (ex.: CAC, LTV, margem por canal) e permitir que o usuário selecione combos de KPIs para análise, em vez de uma bateria fixa. Um sistema de "plano de análise" configurável por parceiro ou tipo de campanha traria flexibilidade para cenários variados.
+
+### 5. Autenticação e multitenancy
+Adicionar login (Google OAuth, Magic Link) para que diferentes times/parceiros acessem apenas suas próprias análises, com histórico persistido e dashboard consolidado.
+
+### 6. CI/CD com testes automatizados
+Pipeline de integração contínua rodando lint, type check e testes unitários no backend (pytest) e frontend (vitest) a cada push. Deploy automatizado via GitHub Actions para uma VPS ou serviço gerenciado (Railway, Fly.io).
+
+### 7. Cache e fila de processamento
+Análises longas (especialmente com LLM e Sheets) deveriam rodar em background com fila (Redis + Celery ou similar), permitindo que o usuário feche a página e volte depois para ver o resultado, além de evitar timeouts em CSVs grandes.
+
+### 8. Monitoramento e observabilidade
+Logs estruturados, métricas de uso (quantas análises, tempo médio, taxa de erro) e tracing (OpenTelemetry) para identificar gargalos. Um health check endpoint e dashboard (Grafana) dariam visibilidade do sistema em produção.
+
+## Estrutura de saída
+
+```
+outputs/<parceiro>/
+  analise.json        — KPIs e decisão
+  graficos/           — PNGs dos gráficos
+  relatorio.md        — Relatório em Markdown
+  relatorio.pdf       — Relatório em PDF
 ```
 
-Isso baixa uma copia do Chromium para uso exclusivo do script.
+---
 
-### 6. Rodar a analise
-
-**Modo basico (gera JSON, graficos, relatorio Markdown e PDF, sem planilha):**
-
-```powershell
-python src\pipeline.py data\dataset_01_parceiroA.csv --llm openai
-```
-
-**Modo completo (tudo acima + atualiza a planilha Google Sheets):**
-
-```powershell
-python src\pipeline.py data\dataset_01_parceiroA.csv --llm openai --update-sheets
-```
-
-Cada execucao adiciona uma nova linha na planilha sem apagar as anteriores (append).
-
-### 7. Ver os resultados
-
-Apos rodar, os arquivos estarao em:
-
-```
-outputs/
-  parceiro_a/
-    analise.json
-    graficos/*.png
-    relatorio.md
-    relatorio.pdf
-  parceiro_b/
-    ...
-  parceiro_c/
-    ...
-```
-
-## Sobre o RESUMO_DESENVOLVIMENTO.md
-
-O arquivo `docs/RESUMO_DESENVOLVIMENTO.md` e a documentacao tecnica completa do projeto. Ele contem:
-
-- **Pergunta central** que o projeto responde.
-- **Input esperado:** schema do CSV.
-- **Output esperado:** JSON, graficos, relatorio PDF e tracking no Sheets.
-- **Stack pensada:** fluxo completo (ETL -> KPIs -> decisao -> LLM -> PDF -> Sheets).
-- **Banco de KPIs:** descricao de cada KPI de decisao (5) e complementar (11), com formulas e ordem de prioridade.
-- **Regra de decisao:** parametros, elegibilidade, criterios de escala, logica de vencedor, empate tecnico, desempate e alertas.
-- **Checklist de implementacao:** tudo que foi feito e o que ainda pode ser evoluido.
-
-Leia-o se quiser entender em detalhes como a decisao e calculada e quais criterios sao usados.
+Agradecimento especial ao time da **Méliuz** pela oportunidade de desenvolver este projeto. Obrigado pela confiança, pelo suporte e por tornar possível a entrega de uma ferramenta que une análise de dados, inteligência artificial e experiência do usuário em um só produto.

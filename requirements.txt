@@ -3,3 +3,6 @@ pandas
 matplotlib
 reportlab
 playwright
+fastapi
+uvicorn[standard]
+python-multipart

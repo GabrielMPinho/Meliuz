@@ -1,0 +1,21 @@
+{
+  "name": "meliuz-analise-frontend",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "concurrently -n api,web -c yellow,cyan \"npm run dev:api\" \"npm run dev:web\"",
+    "dev:web": "vite",
+    "dev:api": "uvicorn api.main:app --reload --port 8000 --app-dir ../",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.4.1",
+    "concurrently": "^10.0.3",
+    "vite": "^6.3.5"
+  }
+}

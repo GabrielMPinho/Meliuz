@@ -14,6 +14,10 @@ def chamar_llm_openai(
     model=None,
     max_output_tokens=None,
 ):
+    RAIZ = Path(__file__).resolve().parent.parent
+    prompt_path = str(RAIZ / prompt_path) if not Path(prompt_path).is_absolute() else prompt_path
+    env_path = str(RAIZ / env_path) if not Path(env_path).is_absolute() else env_path
+
     carregar_env(env_path)
 
     api_key = os.getenv("OPENAI_API_KEY")
