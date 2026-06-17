@@ -227,7 +227,7 @@ def desenhar_marca_pagina(canvas, document, data_analise_texto):
     canvas.roundRect(1.2 * cm, altura - 1.55 * cm, 2.8 * cm, 0.72 * cm, 10, fill=1, stroke=0)
     canvas.setFillColor(MELIUZ_PINK)
     canvas.setFont("Helvetica-Bold", 18)
-    canvas.drawString(1.48 * cm, altura - 1.32 * cm, "méliuz")
+    canvas.drawString(1.48 * cm, altura - 1.32 * cm, "Méliuz")
 
     canvas.setStrokeColor(MELIUZ_BORDER)
     canvas.setLineWidth(0.7)

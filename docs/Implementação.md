@@ -2,17 +2,22 @@
 
 ## O que fazer para implementar
 
-### 1. Configurar a chave da OpenAI
+### 1. Configurar variaveis de ambiente
 
-Preencha o arquivo `.env` na raiz do projeto:
+Copie o `.env.example` para `.env` e preencha os valores locais:
 
 ```env
 OPENAI_API_KEY=sua_chave_aqui
 OPENAI_MODEL=gpt-5.4-mini
 OPENAI_MAX_OUTPUT_TOKENS=5000
+MELIUZ_SHEETS_URL=https://docs.google.com/spreadsheets/d/SEU_ID_DA_PLANILHA/edit?gid=0#gid=0
 ```
 
-O `.env` esta no `.gitignore` para evitar publicar a chave por acidente.
+O `.env` esta no `.gitignore` para evitar publicar chaves e configuracoes
+locais por acidente. O `.env.example` deve ser commitado como template seguro.
+
+Para o tracking funcionar, a planilha definida em `MELIUZ_SHEETS_URL` precisa
+estar publica e permitir alteracoes para qualquer pessoa com o link.
 
 ### 2. Instalar dependencias
 
@@ -39,6 +44,56 @@ O pipeline vai:
 7. validar a resposta com `validacao_llm.py`;
 8. montar `outputs/<parceiro>/relatorio.md`;
 9. montar `outputs/<parceiro>/relatorio.pdf`.
+
+Para gerar o PDF e atualizar a planilha de tracking ao final da analise:
+
+```powershell
+python src\pipeline.py data\dataset_01_parceiroA.csv --llm openai --update-sheets
+```
+
+A planilha recebe uma linha por teste analisado, com as colunas minimas do
+tracking e os ganhadores de cada KPI de decisao. A atualizacao e feita por
+append: cada nova analise entra na proxima linha vazia, sem apagar resultados
+anteriores.
+
+- nome do teste;
+- teste realizado em;
+- parceiro;
+- periodo;
+- descricao;
+- vencedor;
+- resultado;
+- decisao tomada;
+- grupo e valor do maior `lucro_liquido`;
+- grupo e valor do maior `roi`;
+- grupo e valor do maior `lucro_por_comprador`;
+- grupo e valor do maior `gmv`;
+- grupo e valor do maior `total_compradores`.
+
+Tambem existe um script isolado para atualizar apenas a planilha com um ou mais
+CSVs, sem gerar PDF:
+
+```powershell
+python src\atualizar_sheets.py data\dataset_01_parceiroA.csv data\dataset_02_parceiroB.csv data\dataset_03_parceiroC.csv
+```
+
+Esse script tambem faz append. Se quiser reconstruir a planilha do zero, limpe
+a aba manualmente antes de rodar.
+
+Para apenas migrar o cabecalho da planilha para o schema atual, sem adicionar
+uma nova linha:
+
+```powershell
+python src\atualizar_sheets.py --migrate-schema
+```
+
+Para trocar a planilha, altere `MELIUZ_SHEETS_URL` no `.env` ou passe
+`--sheet-url`.
+
+Como a planilha precisa estar publica com permissao de edicao, a atualizacao
+usa Chrome ou Edge via Playwright para colar as novas linhas na proxima linha
+vazia. Se o navegador nao for encontrado automaticamente, defina
+`MELIUZ_CHROME_PATH` no `.env`.
 
 O PDF usa identidade visual inspirada na Meliuz, com rosa como cor principal,
 cabecalho de marca, graficos, tabelas e rodape em todas as paginas com:

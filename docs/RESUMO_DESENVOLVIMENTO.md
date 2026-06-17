@@ -31,12 +31,12 @@ CSV padronizado com o seguinte schema:
 
 ## 4. Stack Pensada
 
-1. Usuário descreve o teste + envia CSV
+1. Usuário envia CSV
 2. Python faz ETL
 3. Python calcula todos os KPIs
 4. Python aplica regra de decisão e define vencedor
 5. Python monta um catálogo de KPIs e combos permitidos
-6. LLM escolhe quais blocos explicativos destacar de acordo com o prompt do usuário
+6. LLM escolhe quais blocos explicativos destacar
 7. Python valida a escolha da LLM
 8. LLM escreve narrativa usando apenas os blocos aprovados
 9. Python monta PDF + registra CSV/Sheets
@@ -295,12 +295,12 @@ Objetivo: ao final deste checklist, a solucao deve ler os 3 datasets, calcular a
 - [x] **Gerar graficos principais**
   Criar graficos objetivos para lucro liquido, ROI vs lucro, composicao comissao/cashback, rentabilidade por comprador e guardrails de escala.
 
-- [ ] **Montar relatorio final**
+- [x] **Montar relatorio final**
   Gerar um relatorio apresentavel com sumario executivo, decisao, justificativa, tabela de KPIs, graficos, riscos, limitacoes e proximo passo recomendado.
 
 ### 7.5. Entrega
 
-- [ ] **Registrar resultado em tracking**
+- [x] **Registrar resultado em tracking**
   Salvar uma linha por teste analisado em Google Sheets, contendo nome do teste, parceiro, periodo, vencedor, resultado e decisao tomada.
 
 - [ ] **Rodar a solucao nos 3 datasets**

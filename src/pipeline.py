@@ -12,6 +12,7 @@ try:
     from llm_relatorio import gerar_resposta_llm_simulada
     from pdf_relatorio import gerar_pdf_relatorio
     from relatorio import salvar_relatorio_markdown
+    from sheets_tracking import atualizar_tracking_google_sheets
     from validacao_llm import validar_resposta_llm
 except ModuleNotFoundError:
     from src.limpeza import data_cleaning
@@ -21,6 +22,7 @@ except ModuleNotFoundError:
     from src.llm_relatorio import gerar_resposta_llm_simulada
     from src.pdf_relatorio import gerar_pdf_relatorio
     from src.relatorio import salvar_relatorio_markdown
+    from src.sheets_tracking import atualizar_tracking_google_sheets
     from src.validacao_llm import validar_resposta_llm
 
 
@@ -29,6 +31,9 @@ def executar_pipeline(
     output_dir="outputs",
     llm="mock",
     model=None,
+    update_sheets=False,
+    sheet_url=None,
+    chrome_path=None,
 ):
     caminho_csv = Path(caminho_csv)
     output_dir = Path(output_dir)
@@ -80,6 +85,15 @@ def executar_pipeline(
         caminho_saida=caminho_pdf,
     )
 
+    resultado_sheets = None
+    if update_sheets:
+        resultado_sheets = atualizar_tracking_google_sheets(
+            json_auditavel=json_auditavel,
+            sheet_url=sheet_url,
+            output_dir=output_dir,
+            chrome_path=chrome_path,
+        )
+
     return {
         "parceiro": json_auditavel["metadados"]["parceiro"],
         "diretorio_saida": str(diretorio_saida),
@@ -90,6 +104,7 @@ def executar_pipeline(
         "pdf": str(caminho_pdf),
         "graficos": graficos_resultado["arquivos"],
         "avisos_graficos": graficos_resultado["avisos"],
+        "google_sheets": resultado_sheets,
     }
 
 
@@ -145,6 +160,26 @@ def montar_parser():
             "do .env."
         ),
     )
+    parser.add_argument(
+        "--update-sheets",
+        action="store_true",
+        help="Atualiza o tracking simples no Google Sheets ao final da analise.",
+    )
+    parser.add_argument(
+        "--sheet-url",
+        default=None,
+        help=(
+            "URL da planilha. Se omitido, usa MELIUZ_SHEETS_URL do .env."
+        ),
+    )
+    parser.add_argument(
+        "--chrome-path",
+        default=None,
+        help=(
+            "Caminho do Chrome/Edge para atualizar Sheets. Se omitido, tenta "
+            "MELIUZ_CHROME_PATH ou caminhos padrao do Windows."
+        ),
+    )
     return parser
 
 
@@ -156,6 +191,9 @@ def main():
             output_dir=args.output_dir,
             llm=args.llm,
             model=args.model,
+            update_sheets=args.update_sheets,
+            sheet_url=args.sheet_url,
+            chrome_path=args.chrome_path,
         )
     except Exception as erro:
         print(f"ERRO: {erro}", file=sys.stderr)
