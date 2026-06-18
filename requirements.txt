@@ -2,7 +2,7 @@ openai
 pandas
 matplotlib
 reportlab
-playwright
+playwright==1.49.0
 fastapi
 uvicorn[standard]
 python-multipart

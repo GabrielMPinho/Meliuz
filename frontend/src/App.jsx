@@ -236,8 +236,17 @@ export default function App() {
       setProgressStep(steps[steps.length - 1]);
 
       if (!res.ok) {
-        const err = await res.json();
-        throw new Error(err.detail || "Erro ao processar análise.");
+        let errorMessage = "Erro ao processar análise.";
+        try {
+          const err = await res.json();
+          errorMessage = err.detail || errorMessage;
+        } catch {
+          try {
+            const text = await res.text();
+            if (text) errorMessage = text;
+          } catch {}
+        }
+        throw new Error(errorMessage);
       }
 
       const data = await res.json();
