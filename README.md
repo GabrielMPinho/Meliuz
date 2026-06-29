@@ -1,4 +1,4 @@
-# Meliuz - Analise de Teste A/B de Cashback
+# Analise de Teste A/B de Cashback
 
 ## O que esse projeto faz
 
