@@ -4,4 +4,4 @@ __pycache__
 venv/
 node_modules/
 frontend/dist/
-outputs/google_sheets_export_validacao.csv
+outputs/

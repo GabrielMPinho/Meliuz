@@ -3,9 +3,9 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "concurrently -n api,web -c yellow,cyan \"npm run dev:api\" \"npm run dev:web\"",
+    "dev": "concurrently -n api,web -c yellow,cyan --restart-tries -1 --restart-after 1000 \"npm run dev:api\" \"npm run dev:web\"",
     "dev:web": "vite",
-    "dev:api": "uvicorn api.main:app --reload --port 8000 --app-dir ../",
+    "dev:api": "python -m uvicorn api.main:app --host 127.0.0.1 --port 8000 --app-dir ../ --reload --reload-dir ../src --reload-dir ../api --reload-dir ../prompts",
     "build": "vite build",
     "preview": "vite preview"
   },
