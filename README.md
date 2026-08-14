@@ -1,4 +1,4 @@
-# Meliuz - Analise de Teste A/B de Cashback
+# Analise de Teste A/B de Cashback
 
 ## O que esse projeto faz
 
@@ -101,5 +101,3 @@ outputs/<parceiro>/
 ```
 
 ---
-
-Agradecimento especial ao time da **Méliuz** pela oportunidade de desenvolver este projeto. Obrigado pela confiança, pelo suporte e por tornar possível a entrega de uma ferramenta que une análise de dados, inteligência artificial e experiência do usuário em um só produto.
