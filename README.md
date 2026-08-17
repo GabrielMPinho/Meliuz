@@ -7,7 +7,7 @@ Dado um CSV de um teste A/B de cashback (grupo de usuarios x data x compradores 
 1. Calcula KPIs de cada grupo (lucro liquido, ROI, lucro por comprador, GMV, compradores totais e mais 11 metricas complementares).
 2. Aplica uma regra deterministica para eleger o grupo vencedor (priorizando maior lucro liquido, validado por ROI, eficiencia e escala).
 3. Envia um JSON estruturado para a OpenAI, que retorna uma narrativa analitica explicando a decisao.
-4. Gera graficos, um relatorio em PDF com identidade visual Meliuz e registra o resultado em uma planilha Google Sheets.
+4. Gera graficos, um relatorio em PDF com identidade visual profissional e registra o resultado em uma planilha Google Sheets.
 
 **Stack:** Python + pandas + matplotlib + reportlab + OpenAI API + Playwright (Google Sheets) + React (frontend web).
 
@@ -20,7 +20,7 @@ Dado um CSV de um teste A/B de cashback (grupo de usuarios x data x compradores 
 - `outputs/<parceiro>/analise.json` — JSON auditavel com todos os KPIs, ranking, alertas e decisao.
 - `outputs/<parceiro>/graficos/` — 5 PNGs (lucro, ROI vs lucro, composicao, rentabilidade, guardrails de escala).
 - `outputs/<parceiro>/relatorio.md` — Relatorio em Markdown.
-- `outputs/<parceiro>/relatorio.pdf` — Relatorio em PDF com identidade visual, graficos e rodape com assinatura + data.
+- `outputs/<parceiro>/relatorio.pdf` — Relatorio em PDF com identidade visual profissional, graficos e rodape com assinatura + data.
 - Planilha de sua escolha atualizada no GoogleSheets
 
 ## Como rodar (interface web)
@@ -50,7 +50,7 @@ cd ..
 OPENAI_API_KEY=sk-sua_chave_openai
 OPENAI_MODEL=gpt-5.4-mini
 OPENAI_MAX_OUTPUT_TOKENS=5000
-MELIUZ_SHEETS_URL=https://docs.google.com/spreadsheets/d/ID_DA_PLANILHA/edit?gid=0#gid=0
+SHEETS_URL=https://docs.google.com/spreadsheets/d/ID_DA_PLANILHA/edit?gid=0#gid=0
 "@ | Out-File -FilePath .env -Encoding utf8
 ```
 

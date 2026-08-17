@@ -20,13 +20,13 @@ from reportlab.platypus import (
 )
 
 
-MELIUZ_PINK = colors.HexColor("#F76BA4")
-MELIUZ_DARK = colors.HexColor("#262132")
-MELIUZ_TEXT = colors.HexColor("#334155")
-MELIUZ_MUTED = colors.HexColor("#64748B")
-MELIUZ_LIGHT = colors.HexColor("#FFF0F6")
-MELIUZ_BORDER = colors.HexColor("#FBCFE8")
-MELIUZ_TEAL = colors.HexColor("#008B7D")
+COLOR_PRIMARY = colors.HexColor("#1e40af")
+COLOR_DARK = colors.HexColor("#111827")
+COLOR_TEXT = colors.HexColor("#1f2937")
+COLOR_MUTED = colors.HexColor("#6b7280")
+COLOR_LIGHT = colors.HexColor("#eff6ff")
+COLOR_BORDER = colors.HexColor("#d1d5db")
+COLOR_ACCENT = colors.HexColor("#0891b2")
 
 
 def gerar_pdf_relatorio(
@@ -88,131 +88,131 @@ def montar_estilos():
     base = getSampleStyleSheet()
     estilos = {
         "title": ParagraphStyle(
-            "MeliuzTitle",
+            "ReportTitle",
             parent=base["Title"],
             fontName="Helvetica-Bold",
             fontSize=24,
             leading=29,
-            textColor=MELIUZ_DARK,
+            textColor=COLOR_DARK,
             spaceAfter=10,
         ),
         "subtitle": ParagraphStyle(
-            "MeliuzSubtitle",
+            "ReportSubtitle",
             parent=base["Normal"],
             fontName="Helvetica",
             fontSize=10.5,
             leading=15,
-            textColor=MELIUZ_MUTED,
+            textColor=COLOR_MUTED,
             spaceAfter=8,
         ),
         "h1": ParagraphStyle(
-            "MeliuzH1",
+            "ReportH1",
             parent=base["Heading1"],
             fontName="Helvetica-Bold",
             fontSize=15,
             leading=19,
-            textColor=MELIUZ_DARK,
+            textColor=COLOR_DARK,
             spaceBefore=12,
             spaceAfter=8,
         ),
         "h2": ParagraphStyle(
-            "MeliuzH2",
+            "ReportH2",
             parent=base["Heading2"],
             fontName="Helvetica-Bold",
             fontSize=12.5,
             leading=16,
-            textColor=MELIUZ_DARK,
+            textColor=COLOR_DARK,
             spaceBefore=8,
             spaceAfter=5,
         ),
         "body": ParagraphStyle(
-            "MeliuzBody",
+            "ReportBody",
             parent=base["BodyText"],
             fontName="Helvetica",
             fontSize=9.1,
             leading=12.4,
-            textColor=MELIUZ_TEXT,
+            textColor=COLOR_TEXT,
             spaceAfter=6,
         ),
         "small": ParagraphStyle(
-            "MeliuzSmall",
+            "ReportSmall",
             parent=base["BodyText"],
             fontName="Helvetica",
             fontSize=8,
             leading=10.5,
-            textColor=MELIUZ_MUTED,
+            textColor=COLOR_MUTED,
             spaceAfter=4,
         ),
         "center": ParagraphStyle(
-            "MeliuzCenter",
+            "ReportCenter",
             parent=base["BodyText"],
             fontName="Helvetica-Bold",
             fontSize=10,
             leading=13,
-            textColor=MELIUZ_PINK,
+            textColor=COLOR_PRIMARY,
             alignment=TA_CENTER,
         ),
         "bullet": ParagraphStyle(
-            "MeliuzBullet",
+            "ReportBullet",
             parent=base["BodyText"],
             fontName="Helvetica",
             fontSize=9,
             leading=12,
             leftIndent=10,
             firstLineIndent=-6,
-            textColor=MELIUZ_TEXT,
+            textColor=COLOR_TEXT,
             spaceAfter=4,
         ),
         "section": ParagraphStyle(
-            "MeliuzSection",
+            "ReportSection",
             parent=base["BodyText"],
             fontName="Helvetica-Bold",
             fontSize=13.5,
             leading=16,
-            textColor=MELIUZ_DARK,
+            textColor=COLOR_DARK,
             alignment=TA_LEFT,
         ),
         "section_subtitle": ParagraphStyle(
-            "MeliuzSectionSubtitle",
+            "ReportSectionSubtitle",
             parent=base["BodyText"],
             fontName="Helvetica",
             fontSize=8.4,
             leading=10.4,
-            textColor=MELIUZ_MUTED,
+            textColor=COLOR_MUTED,
             alignment=TA_LEFT,
         ),
         "metric_label": ParagraphStyle(
-            "MeliuzMetricLabel",
+            "ReportMetricLabel",
             parent=base["BodyText"],
             fontName="Helvetica-Bold",
             fontSize=7.2,
             leading=9,
-            textColor=MELIUZ_MUTED,
+            textColor=COLOR_MUTED,
         ),
         "metric_value": ParagraphStyle(
-            "MeliuzMetricValue",
+            "ReportMetricValue",
             parent=base["BodyText"],
             fontName="Helvetica-Bold",
             fontSize=12.2,
             leading=14,
-            textColor=MELIUZ_DARK,
+            textColor=COLOR_DARK,
         ),
         "card_title": ParagraphStyle(
-            "MeliuzCardTitle",
+            "ReportCardTitle",
             parent=base["Heading3"],
             fontName="Helvetica-Bold",
             fontSize=10.2,
             leading=12.2,
-            textColor=MELIUZ_DARK,
+            textColor=COLOR_DARK,
             spaceAfter=5,
         ),
         "card_body": ParagraphStyle(
-            "MeliuzCardBody",
+            "ReportCardBody",
             parent=base["BodyText"],
             fontName="Helvetica",
             fontSize=8.8,
             leading=12,
-            textColor=MELIUZ_TEXT,
+            textColor=COLOR_TEXT,
             spaceAfter=5,
         ),
     }
@@ -223,17 +223,17 @@ def desenhar_marca_pagina(canvas, document, data_analise_texto):
     largura, altura = A4
     canvas.saveState()
 
-    canvas.setFillColor(MELIUZ_LIGHT)
+    canvas.setFillColor(COLOR_LIGHT)
     canvas.roundRect(1.2 * cm, altura - 1.55 * cm, 2.8 * cm, 0.72 * cm, 10, fill=1, stroke=0)
-    canvas.setFillColor(MELIUZ_PINK)
+    canvas.setFillColor(COLOR_PRIMARY)
     canvas.setFont("Helvetica-Bold", 18)
-    canvas.drawString(1.48 * cm, altura - 1.32 * cm, "Méliuz")
+    canvas.drawString(1.48 * cm, altura - 1.32 * cm, "Relatorio")
 
-    canvas.setStrokeColor(MELIUZ_BORDER)
+    canvas.setStrokeColor(COLOR_BORDER)
     canvas.setLineWidth(0.7)
     canvas.line(1.2 * cm, altura - 1.75 * cm, largura - 1.2 * cm, altura - 1.75 * cm)
 
-    canvas.setStrokeColor(MELIUZ_BORDER)
+    canvas.setStrokeColor(COLOR_BORDER)
     canvas.line(1.2 * cm, 1.15 * cm, largura - 1.2 * cm, 1.15 * cm)
     canvas.setFont("Helvetica", 7.5)
     canvas.setFillColor(colors.HexColor("#8A7180"))
@@ -310,8 +310,8 @@ def montar_metricas_chave(json_auditavel, estilos):
     tabela = Table(dados, colWidths=[4.0 * cm, 4.1 * cm, 3.0 * cm, 4.5 * cm])
     tabela.setStyle(TableStyle([
         ("BACKGROUND", (0, 0), (-1, -1), colors.HexColor("#FFF7FB")),
-        ("BOX", (0, 0), (-1, -1), 0.7, MELIUZ_BORDER),
-        ("INNERGRID", (0, 0), (-1, -1), 0.35, MELIUZ_BORDER),
+        ("BOX", (0, 0), (-1, -1), 0.7, COLOR_BORDER),
+        ("INNERGRID", (0, 0), (-1, -1), 0.35, COLOR_BORDER),
         ("VALIGN", (0, 0), (-1, -1), "TOP"),
         ("LEFTPADDING", (0, 0), (-1, -1), 8),
         ("RIGHTPADDING", (0, 0), (-1, -1), 8),
@@ -328,9 +328,9 @@ def montar_secao_pdf(titulo, subtitulo, estilos):
 
     tabela = Table(dados, colWidths=[16.4 * cm])
     tabela.setStyle(TableStyle([
-        ("BACKGROUND", (0, 0), (-1, -1), MELIUZ_LIGHT),
-        ("BOX", (0, 0), (-1, -1), 0.7, MELIUZ_BORDER),
-        ("LINEBEFORE", (0, 0), (0, -1), 4, MELIUZ_PINK),
+        ("BACKGROUND", (0, 0), (-1, -1), COLOR_LIGHT),
+        ("BOX", (0, 0), (-1, -1), 0.7, COLOR_BORDER),
+        ("LINEBEFORE", (0, 0), (0, -1), 4, COLOR_PRIMARY),
         ("LEFTPADDING", (0, 0), (-1, -1), 9),
         ("RIGHTPADDING", (0, 0), (-1, -1), 8),
         ("TOPPADDING", (0, 0), (-1, -1), 6),
@@ -356,10 +356,10 @@ def montar_card_decisao(decisao, estilos):
 
     tabela = Table(dados, colWidths=[3.0 * cm, 3.2 * cm, 9.2 * cm])
     tabela.setStyle(TableStyle([
-        ("BACKGROUND", (0, 0), (-1, 0), MELIUZ_LIGHT),
-        ("TEXTCOLOR", (0, 0), (-1, 0), MELIUZ_DARK),
-        ("BOX", (0, 0), (-1, -1), 0.8, MELIUZ_BORDER),
-        ("INNERGRID", (0, 0), (-1, -1), 0.4, MELIUZ_BORDER),
+        ("BACKGROUND", (0, 0), (-1, 0), COLOR_LIGHT),
+        ("TEXTCOLOR", (0, 0), (-1, 0), COLOR_DARK),
+        ("BOX", (0, 0), (-1, -1), 0.8, COLOR_BORDER),
+        ("INNERGRID", (0, 0), (-1, -1), 0.4, COLOR_BORDER),
         ("VALIGN", (0, 0), (-1, -1), "TOP"),
         ("LEFTPADDING", (0, 0), (-1, -1), 8),
         ("RIGHTPADDING", (0, 0), (-1, -1), 8),
@@ -453,8 +453,8 @@ def montar_metodologia_resumida(estilos):
     tabela = Table(dados, colWidths=[8.0 * cm, 8.0 * cm])
     tabela.setStyle(TableStyle([
         ("BACKGROUND", (0, 0), (-1, -1), colors.HexColor("#FFF7FB")),
-        ("BOX", (0, 0), (-1, -1), 0.6, MELIUZ_BORDER),
-        ("INNERGRID", (0, 0), (-1, -1), 0.35, MELIUZ_BORDER),
+        ("BOX", (0, 0), (-1, -1), 0.6, COLOR_BORDER),
+        ("INNERGRID", (0, 0), (-1, -1), 0.35, COLOR_BORDER),
         ("VALIGN", (0, 0), (-1, -1), "TOP"),
         ("LEFTPADDING", (0, 0), (-1, -1), 8),
         ("RIGHTPADDING", (0, 0), (-1, -1), 8),
@@ -692,9 +692,9 @@ def montar_card_narrativa(titulo, paragrafos, estilos, destaque=False):
 
     tabela = Table([[conteudo]], colWidths=[16.4 * cm])
     tabela.setStyle(TableStyle([
-        ("BACKGROUND", (0, 0), (-1, -1), MELIUZ_LIGHT if destaque else colors.white),
-        ("BOX", (0, 0), (-1, -1), 0.7, MELIUZ_BORDER),
-        ("LINEBEFORE", (0, 0), (0, -1), 4, MELIUZ_PINK if destaque else MELIUZ_TEAL),
+        ("BACKGROUND", (0, 0), (-1, -1), COLOR_LIGHT if destaque else colors.white),
+        ("BOX", (0, 0), (-1, -1), 0.7, COLOR_BORDER),
+        ("LINEBEFORE", (0, 0), (0, -1), 4, COLOR_PRIMARY if destaque else COLOR_ACCENT),
         ("LEFTPADDING", (0, 0), (-1, -1), 9),
         ("RIGHTPADDING", (0, 0), (-1, -1), 9),
         ("TOPPADDING", (0, 0), (-1, -1), 8),
@@ -771,10 +771,10 @@ def estilo_tabela(compacto=False):
     fonte_grade = 0.3 if compacto else 0.35
 
     return TableStyle([
-        ("BACKGROUND", (0, 0), (-1, 0), MELIUZ_LIGHT),
-        ("TEXTCOLOR", (0, 0), (-1, 0), MELIUZ_DARK),
-        ("BOX", (0, 0), (-1, -1), 0.7, MELIUZ_BORDER),
-        ("INNERGRID", (0, 0), (-1, -1), fonte_grade, MELIUZ_BORDER),
+        ("BACKGROUND", (0, 0), (-1, 0), COLOR_LIGHT),
+        ("TEXTCOLOR", (0, 0), (-1, 0), COLOR_DARK),
+        ("BOX", (0, 0), (-1, -1), 0.7, COLOR_BORDER),
+        ("INNERGRID", (0, 0), (-1, -1), fonte_grade, COLOR_BORDER),
         ("VALIGN", (0, 0), (-1, -1), "TOP"),
         ("LEFTPADDING", (0, 0), (-1, -1), padding),
         ("RIGHTPADDING", (0, 0), (-1, -1), padding),

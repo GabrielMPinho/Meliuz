@@ -55,7 +55,7 @@ def atualizar_tracking_google_sheets(
     carregar_env()
 
     sheet_url = resolver_sheet_url(sheet_url)
-    chrome_path = chrome_path or os.getenv("MELIUZ_CHROME_PATH")
+    chrome_path = chrome_path or os.getenv("CHROME_PATH")
 
     linha = montar_linha_tracking(json_auditavel)
     linhas_existentes = ler_linhas_publicas(sheet_url)
@@ -99,7 +99,7 @@ def atualizar_tracking_varias_analises(
     carregar_env()
 
     sheet_url = resolver_sheet_url(sheet_url)
-    chrome_path = chrome_path or os.getenv("MELIUZ_CHROME_PATH")
+    chrome_path = chrome_path or os.getenv("CHROME_PATH")
 
     novas_linhas = []
     for analise in analises:
@@ -289,7 +289,7 @@ def migrar_tracking_google_sheets(
     carregar_env()
 
     sheet_url = resolver_sheet_url(sheet_url)
-    chrome_path = chrome_path or os.getenv("MELIUZ_CHROME_PATH")
+    chrome_path = chrome_path or os.getenv("CHROME_PATH")
 
     linhas_existentes = ler_linhas_publicas(sheet_url)
     linhas_migradas, schema_migrado = normalizar_schema_tracking(linhas_existentes)
@@ -500,7 +500,7 @@ def encontrar_chrome(chrome_path=None):
             return candidato
 
     raise FileNotFoundError(
-        "Chrome ou Edge nao encontrado. Defina MELIUZ_CHROME_PATH no .env."
+        "Chrome ou Edge nao encontrado. Defina CHROME_PATH no .env."
     )
 
 
@@ -524,11 +524,11 @@ def carregar_env(env_path=".env"):
 
 
 def resolver_sheet_url(sheet_url=None):
-    sheet_url = sheet_url or os.getenv("MELIUZ_SHEETS_URL")
+    sheet_url = sheet_url or os.getenv("SHEETS_URL")
 
     if not sheet_url:
         raise ValueError(
-            "MELIUZ_SHEETS_URL nao encontrada. Defina a URL da planilha no "
+            "SHEETS_URL nao encontrada. Defina a URL da planilha no "
             ".env ou passe --sheet-url."
         )
 

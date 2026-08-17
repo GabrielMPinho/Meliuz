@@ -65,7 +65,7 @@ def montar_parser():
         "--sheet-url",
         default=None,
         help=(
-            "URL da planilha. Se omitido, usa MELIUZ_SHEETS_URL do .env."
+            "URL da planilha. Se omitido, usa SHEETS_URL do .env."
         ),
     )
     parser.add_argument(
@@ -77,7 +77,7 @@ def montar_parser():
         "--chrome-path",
         default=None,
         help=(
-            "Caminho do Chrome/Edge. Se omitido, tenta MELIUZ_CHROME_PATH "
+            "Caminho do Chrome/Edge. Se omitido, tenta CHROME_PATH "
             "ou os caminhos padrao do Windows."
         ),
     )

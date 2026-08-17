@@ -1,7 +1,7 @@
 import { useState, useRef } from "react";
 
-const PINK = "#E91E63";
-const PINK_LIGHT = "#fce4ec";
+const PRIMARY = "#1e40af";
+const PRIMARY_LIGHT = "#dbeafe";
 
 function StatusIcon({ type }) {
   if (type === "upload") {
@@ -9,7 +9,7 @@ function StatusIcon({ type }) {
       <svg width="48" height="48" viewBox="0 0 24 24" fill="none">
         <path
           d="M12 16V4m0 0L8 8m4-4l4 4M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2"
-          stroke={PINK}
+          stroke={PRIMARY}
           strokeWidth="2"
           strokeLinecap="round"
           strokeLinejoin="round"
@@ -30,12 +30,12 @@ function StatusIcon({ type }) {
           cx="12"
           cy="12"
           r="10"
-          stroke={PINK_LIGHT}
+          stroke={PRIMARY_LIGHT}
           strokeWidth="3"
         />
         <path
           d="M12 2a10 10 0 019.95 9"
-          stroke={PINK}
+          stroke={PRIMARY}
           strokeWidth="3"
           strokeLinecap="round"
         />
@@ -45,7 +45,7 @@ function StatusIcon({ type }) {
   if (type === "success") {
     return (
       <svg width="48" height="48" viewBox="0 0 24 24" fill="none">
-        <circle cx="12" cy="12" r="10" fill={PINK} />
+        <circle cx="12" cy="12" r="10" fill={PRIMARY} />
         <path
           d="M8 12l3 3 5-5"
           stroke="white"
@@ -59,7 +59,7 @@ function StatusIcon({ type }) {
   if (type === "error") {
     return (
       <svg width="48" height="48" viewBox="0 0 24 24" fill="none">
-        <circle cx="12" cy="12" r="10" fill="#e53935" />
+        <circle cx="12" cy="12" r="10" fill="#dc2626" />
         <path
           d="M8 8l8 8M16 8l-8 8"
           stroke="white"
@@ -276,27 +276,21 @@ export default function App() {
           <h1 className="logo">
             <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
               <path
-                d="M12 2L2 7l10 5 10-5-10-5z"
+                d="M3 3h18v4H3V3zm0 7h18v4H3v-4zm0 7h18v4H3v-4z"
                 stroke="white"
                 strokeWidth="2"
                 strokeLinejoin="round"
               />
               <path
-                d="M2 17l10 5 10-5"
+                d="M7 5h2m4 0h4M7 12h2m4 0h4M7 19h2m4 0h4"
                 stroke="white"
                 strokeWidth="2"
-                strokeLinejoin="round"
-              />
-              <path
-                d="M2 12l10 5 10-5"
-                stroke="white"
-                strokeWidth="2"
-                strokeLinejoin="round"
+                strokeLinecap="round"
               />
             </svg>
-            Méliuz
+            Análise A/B
           </h1>
-          <p className="header-sub">Análise de Teste A/B de Cashback</p>
+          <p className="header-sub">Relatório de Teste A/B de Cashback</p>
         </div>
       </header>
 
@@ -371,8 +365,6 @@ export default function App() {
 
       <footer className="footer">
         <span>Gabriel Manata de Pinho</span>
-        <span className="footer-sep">·</span>
-        <span>Méliuz</span>
       </footer>
     </div>
   );

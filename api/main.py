@@ -12,7 +12,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from src.pipeline import executar_pipeline
 from src.sheets_tracking import carregar_env, resolver_sheet_url
 
-app = FastAPI(title="Meliuz - Analise A/B Cashback")
+app = FastAPI(title="Analise A/B Cashback")
 
 app.add_middleware(
     CORSMiddleware,
